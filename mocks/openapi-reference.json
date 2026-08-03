@@ -1,0 +1,601 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Cinema Scheduler BE — spec di riferimento (NON autoritativo)",
+    "version": "0.0.0-reference",
+    "description": "Spec minimo di riferimento per sbloccare lo sviluppo frontend quando il backend non e' ancora disponibile. NON e' la fonte di verita': appena il backend espone /openapi.json, questo file va abbandonato in favore di quello reale. I nomi dei campi qui riflettono le fixture in mocks/fixtures/, derivate dai dati di seed del backend."
+  },
+  "servers": [{ "url": "http://localhost:3001" }],
+  "tags": [
+    { "name": "auth" },
+    { "name": "film" },
+    { "name": "sale" },
+    { "name": "proiezioni" },
+    { "name": "prenotazioni" }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "responses": {
+          "200": {
+            "description": "Servizio attivo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "status": { "type": "string" } },
+                  "required": ["status"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Registrazione di un nuovo cliente",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RegisterInput" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Utente creato",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AuthResponse" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "409": { "$ref": "#/components/responses/Conflict" }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/LoginInput" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Autenticazione riuscita",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AuthResponse" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/films": {
+      "get": {
+        "tags": ["film"],
+        "summary": "Elenco film",
+        "parameters": [
+          { "name": "page", "in": "query", "schema": { "type": "integer", "minimum": 1 } },
+          { "name": "pageSize", "in": "query", "schema": { "type": "integer", "minimum": 1 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Elenco paginato",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": { "type": "array", "items": { "$ref": "#/components/schemas/Film" } },
+                    "total": { "type": "integer" },
+                    "page": { "type": "integer" },
+                    "pageSize": { "type": "integer" }
+                  },
+                  "required": ["items", "total"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["film"],
+        "summary": "Crea un film (admin)",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/FilmInput" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Film creato",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Film" } }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" }
+        }
+      }
+    },
+    "/films/{id}": {
+      "parameters": [
+        { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+      ],
+      "get": {
+        "tags": ["film"],
+        "summary": "Dettaglio film",
+        "responses": {
+          "200": {
+            "description": "Film",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Film" } }
+            }
+          },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "patch": {
+        "tags": ["film"],
+        "summary": "Aggiorna un film (admin)",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/FilmInput" } }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Film aggiornato",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Film" } }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "delete": {
+        "tags": ["film"],
+        "summary": "Elimina un film (admin)",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "204": { "description": "Eliminato" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/cinemas/{cinemaId}/sale": {
+      "parameters": [
+        { "name": "cinemaId", "in": "path", "required": true, "schema": { "type": "integer" } }
+      ],
+      "get": {
+        "tags": ["sale"],
+        "summary": "Elenco sale di un cinema",
+        "responses": {
+          "200": {
+            "description": "Elenco sale",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Sala" } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/proiezioni": {
+      "get": {
+        "tags": ["proiezioni"],
+        "summary": "Palinsesto filtrabile",
+        "parameters": [
+          { "name": "cinemaId", "in": "query", "schema": { "type": "integer" } },
+          { "name": "data", "in": "query", "schema": { "type": "string", "format": "date" } },
+          { "name": "filmId", "in": "query", "schema": { "type": "integer" } },
+          { "name": "salaId", "in": "query", "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Elenco proiezioni",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Proiezione" } }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["proiezioni"],
+        "summary": "Crea una proiezione (admin)",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/ProiezioneInput" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Proiezione creata",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Proiezione" } }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "409": {
+            "description": "Sovrapposizione con una proiezione esistente nella stessa sala",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+            }
+          }
+        }
+      }
+    },
+    "/proiezioni/{id}": {
+      "parameters": [
+        { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+      ],
+      "get": {
+        "tags": ["proiezioni"],
+        "summary": "Dettaglio proiezione",
+        "responses": {
+          "200": {
+            "description": "Proiezione",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Proiezione" } }
+            }
+          },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "delete": {
+        "tags": ["proiezioni"],
+        "summary": "Elimina una proiezione (admin)",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "204": { "description": "Eliminata" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/proiezioni/{id}/posti": {
+      "parameters": [
+        { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+      ],
+      "get": {
+        "tags": ["proiezioni"],
+        "summary": "Disponibilita' dei posti per una proiezione",
+        "responses": {
+          "200": {
+            "description": "Mappa dei posti",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DisponibilitaPosti" }
+              }
+            }
+          },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/proiezioni/{id}/prenotazioni": {
+      "parameters": [
+        { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+      ],
+      "post": {
+        "tags": ["prenotazioni"],
+        "summary": "Prenota uno o piu' posti",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "posti": { "type": "array", "items": { "$ref": "#/components/schemas/Posto" }, "minItems": 1 }
+                },
+                "required": ["posti"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Prenotazione creata",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Prenotazione" } }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "409": {
+            "description": "Uno o piu' posti risultano gia' prenotati",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+            }
+          }
+        }
+      }
+    },
+    "/prenotazioni": {
+      "get": {
+        "tags": ["prenotazioni"],
+        "summary": "Prenotazioni dell'utente autenticato",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Elenco prenotazioni",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Prenotazione" } }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/prenotazioni/{id}": {
+      "parameters": [
+        { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+      ],
+      "delete": {
+        "tags": ["prenotazioni"],
+        "summary": "Cancella una prenotazione",
+        "description": "Consentito solo fino a CANCELLATION_DEADLINE_HOURS (default 3) ore prima dell'inizio dello spettacolo.",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "204": { "description": "Cancellata" },
+          "403": {
+            "description": "Termine di cancellazione superato",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+            }
+          },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/report/occupazione": {
+      "get": {
+        "tags": ["proiezioni"],
+        "summary": "Report di occupazione mensile per sala (admin)",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "cinemaId", "in": "query", "required": true, "schema": { "type": "integer" } },
+          { "name": "mese", "in": "query", "required": true, "schema": { "type": "integer", "minimum": 1, "maximum": 12 } },
+          { "name": "anno", "in": "query", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Report",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/OccupazioneProiezione" }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Payload non valido",
+        "content": {
+          "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+        }
+      },
+      "Unauthorized": {
+        "description": "Non autenticato",
+        "content": {
+          "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+        }
+      },
+      "Forbidden": {
+        "description": "Non autorizzato per questo ruolo",
+        "content": {
+          "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+        }
+      },
+      "NotFound": {
+        "description": "Risorsa inesistente",
+        "content": {
+          "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+        }
+      },
+      "Conflict": {
+        "description": "Conflitto",
+        "content": {
+          "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } }
+        }
+      }
+    },
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": { "type": "string" },
+              "message": { "type": "string" },
+              "details": {}
+            },
+            "required": ["code", "message"]
+          }
+        },
+        "required": ["error"]
+      },
+      "Genere": {
+        "type": "string",
+        "enum": ["Azione", "Animazione", "Commedia", "Documentario", "Drammatico", "Fantascienza", "Horror", "Romantico", "Thriller"]
+      },
+      "RatingEta": { "type": "string", "enum": ["T", "14+", "18+"] },
+      "Ruolo": { "type": "string", "enum": ["customer", "admin"] },
+      "StatoPrenotazione": { "type": "string", "enum": ["pending", "confirmed", "cancelled"] },
+      "Film": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "titolo": { "type": "string" },
+          "durataMinuti": { "type": "integer", "minimum": 1 },
+          "genere": { "$ref": "#/components/schemas/Genere" },
+          "ratingEta": { "$ref": "#/components/schemas/RatingEta" }
+        },
+        "required": ["id", "titolo", "durataMinuti", "genere", "ratingEta"]
+      },
+      "FilmInput": {
+        "type": "object",
+        "properties": {
+          "titolo": { "type": "string", "minLength": 1 },
+          "durataMinuti": { "type": "integer", "minimum": 1 },
+          "genere": { "$ref": "#/components/schemas/Genere" },
+          "ratingEta": { "$ref": "#/components/schemas/RatingEta" }
+        },
+        "required": ["titolo", "durataMinuti", "genere", "ratingEta"]
+      },
+      "Sala": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "cinemaId": { "type": "integer" },
+          "nome": { "type": "string" },
+          "righe": { "type": "integer" },
+          "colonne": { "type": "integer" },
+          "capienza": { "type": "integer" }
+        },
+        "required": ["id", "cinemaId", "nome", "righe", "colonne", "capienza"]
+      },
+      "Proiezione": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "filmId": { "type": "integer" },
+          "salaId": { "type": "integer" },
+          "dataOraInizio": { "type": "string", "format": "date-time" },
+          "dataOraFine": { "type": "string", "format": "date-time" },
+          "film": { "$ref": "#/components/schemas/Film" },
+          "sala": { "$ref": "#/components/schemas/Sala" }
+        },
+        "required": ["id", "filmId", "salaId", "dataOraInizio", "dataOraFine"]
+      },
+      "ProiezioneInput": {
+        "type": "object",
+        "properties": {
+          "filmId": { "type": "integer" },
+          "salaId": { "type": "integer" },
+          "dataOraInizio": { "type": "string", "format": "date-time" }
+        },
+        "required": ["filmId", "salaId", "dataOraInizio"]
+      },
+      "Posto": {
+        "type": "object",
+        "properties": {
+          "riga": { "type": "integer", "minimum": 1 },
+          "colonna": { "type": "integer", "minimum": 1 }
+        },
+        "required": ["riga", "colonna"]
+      },
+      "DisponibilitaPosti": {
+        "type": "object",
+        "properties": {
+          "proiezioneId": { "type": "integer" },
+          "righe": { "type": "integer" },
+          "colonne": { "type": "integer" },
+          "postiOccupati": { "type": "array", "items": { "$ref": "#/components/schemas/Posto" } }
+        },
+        "required": ["proiezioneId", "righe", "colonne", "postiOccupati"]
+      },
+      "Prenotazione": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "proiezioneId": { "type": "integer" },
+          "utenteId": { "type": "integer" },
+          "stato": { "$ref": "#/components/schemas/StatoPrenotazione" },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "posti": { "type": "array", "items": { "$ref": "#/components/schemas/Posto" } }
+        },
+        "required": ["id", "proiezioneId", "utenteId", "stato", "createdAt", "posti"]
+      },
+      "Utente": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "email": { "type": "string", "format": "email" },
+          "nome": { "type": "string" },
+          "cognome": { "type": "string" },
+          "ruolo": { "$ref": "#/components/schemas/Ruolo" }
+        },
+        "required": ["id", "email", "nome", "cognome", "ruolo"]
+      },
+      "RegisterInput": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string", "format": "email" },
+          "password": { "type": "string", "minLength": 8 },
+          "nome": { "type": "string" },
+          "cognome": { "type": "string" }
+        },
+        "required": ["email", "password", "nome", "cognome"]
+      },
+      "LoginInput": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string", "format": "email" },
+          "password": { "type": "string" }
+        },
+        "required": ["email", "password"]
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "token": { "type": "string" },
+          "utente": { "$ref": "#/components/schemas/Utente" }
+        },
+        "required": ["token", "utente"]
+      },
+      "OccupazioneProiezione": {
+        "type": "object",
+        "properties": {
+          "proiezioneId": { "type": "integer" },
+          "salaId": { "type": "integer" },
+          "dataOraInizio": { "type": "string", "format": "date-time" },
+          "capienza": { "type": "integer" },
+          "postiPrenotati": { "type": "integer" },
+          "percentualeOccupazione": { "type": "number" }
+        },
+        "required": ["proiezioneId", "salaId", "dataOraInizio", "capienza", "postiPrenotati", "percentualeOccupazione"]
+      }
+    }
+  }
+}

@@ -1,0 +1,548 @@
+[
+  {
+    "id": 1,
+    "filmId": 6,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-03T15:30:00Z",
+    "dataOraFine": "2026-08-03T17:55:00Z"
+  },
+  {
+    "id": 2,
+    "filmId": 2,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-03T18:10:00Z",
+    "dataOraFine": "2026-08-03T20:22:00Z"
+  },
+  {
+    "id": 3,
+    "filmId": 2,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-03T20:37:00Z",
+    "dataOraFine": "2026-08-03T22:49:00Z"
+  },
+  {
+    "id": 4,
+    "filmId": 2,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-03T15:30:00Z",
+    "dataOraFine": "2026-08-03T17:42:00Z"
+  },
+  {
+    "id": 5,
+    "filmId": 6,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-03T17:57:00Z",
+    "dataOraFine": "2026-08-03T20:22:00Z"
+  },
+  {
+    "id": 6,
+    "filmId": 5,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-03T16:00:00Z",
+    "dataOraFine": "2026-08-03T17:50:00Z"
+  },
+  {
+    "id": 7,
+    "filmId": 1,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-03T18:05:00Z",
+    "dataOraFine": "2026-08-03T20:03:00Z"
+  },
+  {
+    "id": 8,
+    "filmId": 8,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-03T20:18:00Z",
+    "dataOraFine": "2026-08-03T21:47:00Z"
+  },
+  {
+    "id": 9,
+    "filmId": 7,
+    "salaId": 4,
+    "dataOraInizio": "2026-08-03T17:00:00Z",
+    "dataOraFine": "2026-08-03T18:41:00Z"
+  },
+  {
+    "id": 10,
+    "filmId": 2,
+    "salaId": 4,
+    "dataOraInizio": "2026-08-03T18:56:00Z",
+    "dataOraFine": "2026-08-03T21:08:00Z"
+  },
+  {
+    "id": 11,
+    "filmId": 6,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-04T15:30:00Z",
+    "dataOraFine": "2026-08-04T17:55:00Z"
+  },
+  {
+    "id": 12,
+    "filmId": 4,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-04T18:10:00Z",
+    "dataOraFine": "2026-08-04T19:55:00Z"
+  },
+  {
+    "id": 13,
+    "filmId": 2,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-04T20:10:00Z",
+    "dataOraFine": "2026-08-04T22:22:00Z"
+  },
+  {
+    "id": 14,
+    "filmId": 4,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-04T15:30:00Z",
+    "dataOraFine": "2026-08-04T17:15:00Z"
+  },
+  {
+    "id": 15,
+    "filmId": 5,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-04T17:30:00Z",
+    "dataOraFine": "2026-08-04T19:20:00Z"
+  },
+  {
+    "id": 16,
+    "filmId": 2,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-04T19:35:00Z",
+    "dataOraFine": "2026-08-04T21:47:00Z"
+  },
+  {
+    "id": 17,
+    "filmId": 2,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-04T16:00:00Z",
+    "dataOraFine": "2026-08-04T18:12:00Z"
+  },
+  {
+    "id": 18,
+    "filmId": 7,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-04T18:27:00Z",
+    "dataOraFine": "2026-08-04T20:08:00Z"
+  },
+  {
+    "id": 19,
+    "filmId": 5,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-04T20:23:00Z",
+    "dataOraFine": "2026-08-04T22:13:00Z"
+  },
+  {
+    "id": 20,
+    "filmId": 6,
+    "salaId": 4,
+    "dataOraInizio": "2026-08-04T17:00:00Z",
+    "dataOraFine": "2026-08-04T19:25:00Z"
+  },
+  {
+    "id": 21,
+    "filmId": 3,
+    "salaId": 4,
+    "dataOraInizio": "2026-08-04T19:40:00Z",
+    "dataOraFine": "2026-08-04T21:17:00Z"
+  },
+  {
+    "id": 22,
+    "filmId": 6,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-05T15:30:00Z",
+    "dataOraFine": "2026-08-05T17:55:00Z"
+  },
+  {
+    "id": 23,
+    "filmId": 4,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-05T18:10:00Z",
+    "dataOraFine": "2026-08-05T19:55:00Z"
+  },
+  {
+    "id": 24,
+    "filmId": 5,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-05T20:10:00Z",
+    "dataOraFine": "2026-08-05T22:00:00Z"
+  },
+  {
+    "id": 25,
+    "filmId": 3,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-05T15:30:00Z",
+    "dataOraFine": "2026-08-05T17:07:00Z"
+  },
+  {
+    "id": 26,
+    "filmId": 4,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-05T17:22:00Z",
+    "dataOraFine": "2026-08-05T19:07:00Z"
+  },
+  {
+    "id": 27,
+    "filmId": 3,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-05T19:22:00Z",
+    "dataOraFine": "2026-08-05T20:59:00Z"
+  },
+  {
+    "id": 28,
+    "filmId": 8,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-05T21:14:00Z",
+    "dataOraFine": "2026-08-05T22:43:00Z"
+  },
+  {
+    "id": 29,
+    "filmId": 5,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-05T16:00:00Z",
+    "dataOraFine": "2026-08-05T17:50:00Z"
+  },
+  {
+    "id": 30,
+    "filmId": 4,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-05T18:05:00Z",
+    "dataOraFine": "2026-08-05T19:50:00Z"
+  },
+  {
+    "id": 31,
+    "filmId": 6,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-05T20:05:00Z",
+    "dataOraFine": "2026-08-05T22:30:00Z"
+  },
+  {
+    "id": 32,
+    "filmId": 4,
+    "salaId": 4,
+    "dataOraInizio": "2026-08-05T17:00:00Z",
+    "dataOraFine": "2026-08-05T18:45:00Z"
+  },
+  {
+    "id": 33,
+    "filmId": 1,
+    "salaId": 4,
+    "dataOraInizio": "2026-08-05T19:00:00Z",
+    "dataOraFine": "2026-08-05T20:58:00Z"
+  },
+  {
+    "id": 34,
+    "filmId": 7,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-06T15:30:00Z",
+    "dataOraFine": "2026-08-06T17:11:00Z"
+  },
+  {
+    "id": 35,
+    "filmId": 5,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-06T17:26:00Z",
+    "dataOraFine": "2026-08-06T19:16:00Z"
+  },
+  {
+    "id": 36,
+    "filmId": 2,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-06T19:31:00Z",
+    "dataOraFine": "2026-08-06T21:43:00Z"
+  },
+  {
+    "id": 37,
+    "filmId": 6,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-06T15:30:00Z",
+    "dataOraFine": "2026-08-06T17:55:00Z"
+  },
+  {
+    "id": 38,
+    "filmId": 4,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-06T18:10:00Z",
+    "dataOraFine": "2026-08-06T19:55:00Z"
+  },
+  {
+    "id": 39,
+    "filmId": 8,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-06T20:10:00Z",
+    "dataOraFine": "2026-08-06T21:39:00Z"
+  },
+  {
+    "id": 40,
+    "filmId": 8,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-06T16:00:00Z",
+    "dataOraFine": "2026-08-06T17:29:00Z"
+  },
+  {
+    "id": 41,
+    "filmId": 3,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-06T17:44:00Z",
+    "dataOraFine": "2026-08-06T19:21:00Z"
+  },
+  {
+    "id": 42,
+    "filmId": 5,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-06T19:36:00Z",
+    "dataOraFine": "2026-08-06T21:26:00Z"
+  },
+  {
+    "id": 43,
+    "filmId": 4,
+    "salaId": 4,
+    "dataOraInizio": "2026-08-06T17:00:00Z",
+    "dataOraFine": "2026-08-06T18:45:00Z"
+  },
+  {
+    "id": 44,
+    "filmId": 5,
+    "salaId": 4,
+    "dataOraInizio": "2026-08-06T19:00:00Z",
+    "dataOraFine": "2026-08-06T20:50:00Z"
+  },
+  {
+    "id": 45,
+    "filmId": 7,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-07T15:30:00Z",
+    "dataOraFine": "2026-08-07T17:11:00Z"
+  },
+  {
+    "id": 46,
+    "filmId": 6,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-07T17:26:00Z",
+    "dataOraFine": "2026-08-07T19:51:00Z"
+  },
+  {
+    "id": 47,
+    "filmId": 4,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-07T20:06:00Z",
+    "dataOraFine": "2026-08-07T21:51:00Z"
+  },
+  {
+    "id": 48,
+    "filmId": 8,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-07T15:30:00Z",
+    "dataOraFine": "2026-08-07T16:59:00Z"
+  },
+  {
+    "id": 49,
+    "filmId": 2,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-07T17:14:00Z",
+    "dataOraFine": "2026-08-07T19:26:00Z"
+  },
+  {
+    "id": 50,
+    "filmId": 1,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-07T19:41:00Z",
+    "dataOraFine": "2026-08-07T21:39:00Z"
+  },
+  {
+    "id": 51,
+    "filmId": 3,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-07T16:00:00Z",
+    "dataOraFine": "2026-08-07T17:37:00Z"
+  },
+  {
+    "id": 52,
+    "filmId": 3,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-07T17:52:00Z",
+    "dataOraFine": "2026-08-07T19:29:00Z"
+  },
+  {
+    "id": 53,
+    "filmId": 7,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-07T19:44:00Z",
+    "dataOraFine": "2026-08-07T21:25:00Z"
+  },
+  {
+    "id": 54,
+    "filmId": 7,
+    "salaId": 4,
+    "dataOraInizio": "2026-08-07T17:00:00Z",
+    "dataOraFine": "2026-08-07T18:41:00Z"
+  },
+  {
+    "id": 55,
+    "filmId": 7,
+    "salaId": 4,
+    "dataOraInizio": "2026-08-07T18:56:00Z",
+    "dataOraFine": "2026-08-07T20:37:00Z"
+  },
+  {
+    "id": 56,
+    "filmId": 8,
+    "salaId": 4,
+    "dataOraInizio": "2026-08-07T20:52:00Z",
+    "dataOraFine": "2026-08-07T22:21:00Z"
+  },
+  {
+    "id": 57,
+    "filmId": 1,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-08T15:30:00Z",
+    "dataOraFine": "2026-08-08T17:28:00Z"
+  },
+  {
+    "id": 58,
+    "filmId": 2,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-08T17:43:00Z",
+    "dataOraFine": "2026-08-08T19:55:00Z"
+  },
+  {
+    "id": 59,
+    "filmId": 5,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-08T20:10:00Z",
+    "dataOraFine": "2026-08-08T22:00:00Z"
+  },
+  {
+    "id": 60,
+    "filmId": 2,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-08T15:30:00Z",
+    "dataOraFine": "2026-08-08T17:42:00Z"
+  },
+  {
+    "id": 61,
+    "filmId": 5,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-08T17:57:00Z",
+    "dataOraFine": "2026-08-08T19:47:00Z"
+  },
+  {
+    "id": 62,
+    "filmId": 7,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-08T20:02:00Z",
+    "dataOraFine": "2026-08-08T21:43:00Z"
+  },
+  {
+    "id": 63,
+    "filmId": 8,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-08T16:00:00Z",
+    "dataOraFine": "2026-08-08T17:29:00Z"
+  },
+  {
+    "id": 64,
+    "filmId": 1,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-08T17:44:00Z",
+    "dataOraFine": "2026-08-08T19:42:00Z"
+  },
+  {
+    "id": 65,
+    "filmId": 5,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-08T19:57:00Z",
+    "dataOraFine": "2026-08-08T21:47:00Z"
+  },
+  {
+    "id": 66,
+    "filmId": 2,
+    "salaId": 4,
+    "dataOraInizio": "2026-08-08T17:00:00Z",
+    "dataOraFine": "2026-08-08T19:12:00Z"
+  },
+  {
+    "id": 67,
+    "filmId": 5,
+    "salaId": 4,
+    "dataOraInizio": "2026-08-08T19:27:00Z",
+    "dataOraFine": "2026-08-08T21:17:00Z"
+  },
+  {
+    "id": 68,
+    "filmId": 3,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-09T15:30:00Z",
+    "dataOraFine": "2026-08-09T17:07:00Z"
+  },
+  {
+    "id": 69,
+    "filmId": 6,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-09T17:22:00Z",
+    "dataOraFine": "2026-08-09T19:47:00Z"
+  },
+  {
+    "id": 70,
+    "filmId": 3,
+    "salaId": 1,
+    "dataOraInizio": "2026-08-09T20:02:00Z",
+    "dataOraFine": "2026-08-09T21:39:00Z"
+  },
+  {
+    "id": 71,
+    "filmId": 6,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-09T15:30:00Z",
+    "dataOraFine": "2026-08-09T17:55:00Z"
+  },
+  {
+    "id": 72,
+    "filmId": 8,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-09T18:10:00Z",
+    "dataOraFine": "2026-08-09T19:39:00Z"
+  },
+  {
+    "id": 73,
+    "filmId": 1,
+    "salaId": 2,
+    "dataOraInizio": "2026-08-09T19:54:00Z",
+    "dataOraFine": "2026-08-09T21:52:00Z"
+  },
+  {
+    "id": 74,
+    "filmId": 6,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-09T16:00:00Z",
+    "dataOraFine": "2026-08-09T18:25:00Z"
+  },
+  {
+    "id": 75,
+    "filmId": 5,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-09T18:40:00Z",
+    "dataOraFine": "2026-08-09T20:30:00Z"
+  },
+  {
+    "id": 76,
+    "filmId": 4,
+    "salaId": 3,
+    "dataOraInizio": "2026-08-09T20:45:00Z",
+    "dataOraFine": "2026-08-09T22:30:00Z"
+  },
+  {
+    "id": 77,
+    "filmId": 4,
+    "salaId": 4,
+    "dataOraInizio": "2026-08-09T17:00:00Z",
+    "dataOraFine": "2026-08-09T18:45:00Z"
+  },
+  {
+    "id": 78,
+    "filmId": 2,
+    "salaId": 4,
+    "dataOraInizio": "2026-08-09T19:00:00Z",
+    "dataOraFine": "2026-08-09T21:12:00Z"
+  }
+]

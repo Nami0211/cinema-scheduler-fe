@@ -1,0 +1,114 @@
+[
+  {
+    "id": 1,
+    "email": "admin@multiplexaurora.it",
+    "nome": "Marco",
+    "cognome": "Bianchi",
+    "ruolo": "admin"
+  },
+  {
+    "id": 2,
+    "email": "alice.ferrari@example.com",
+    "nome": "Alice",
+    "cognome": "Ferrari",
+    "ruolo": "customer"
+  },
+  {
+    "id": 3,
+    "email": "roberto.ricci@example.com",
+    "nome": "Roberto",
+    "cognome": "Ricci",
+    "ruolo": "customer"
+  },
+  {
+    "id": 4,
+    "email": "andrea.russo@example.com",
+    "nome": "Andrea",
+    "cognome": "Russo",
+    "ruolo": "customer"
+  },
+  {
+    "id": 5,
+    "email": "alice.costa@example.com",
+    "nome": "Alice",
+    "cognome": "Costa",
+    "ruolo": "customer"
+  },
+  {
+    "id": 6,
+    "email": "luca.conti@example.com",
+    "nome": "Luca",
+    "cognome": "Conti",
+    "ruolo": "customer"
+  },
+  {
+    "id": 7,
+    "email": "giulia.rossi@example.com",
+    "nome": "Giulia",
+    "cognome": "Rossi",
+    "ruolo": "customer"
+  },
+  {
+    "id": 8,
+    "email": "andrea.colombo@example.com",
+    "nome": "Andrea",
+    "cognome": "Colombo",
+    "ruolo": "customer"
+  },
+  {
+    "id": 9,
+    "email": "simone.rossi@example.com",
+    "nome": "Simone",
+    "cognome": "Rossi",
+    "ruolo": "customer"
+  },
+  {
+    "id": 10,
+    "email": "andrea.costa@example.com",
+    "nome": "Andrea",
+    "cognome": "Costa",
+    "ruolo": "customer"
+  },
+  {
+    "id": 11,
+    "email": "roberto.gallo@example.com",
+    "nome": "Roberto",
+    "cognome": "Gallo",
+    "ruolo": "customer"
+  },
+  {
+    "id": 12,
+    "email": "andrea.bruno@example.com",
+    "nome": "Andrea",
+    "cognome": "Bruno",
+    "ruolo": "customer"
+  },
+  {
+    "id": 13,
+    "email": "chiara.fontana@example.com",
+    "nome": "Chiara",
+    "cognome": "Fontana",
+    "ruolo": "customer"
+  },
+  {
+    "id": 14,
+    "email": "valentina.fontana@example.com",
+    "nome": "Valentina",
+    "cognome": "Fontana",
+    "ruolo": "customer"
+  },
+  {
+    "id": 15,
+    "email": "roberto.greco@example.com",
+    "nome": "Roberto",
+    "cognome": "Greco",
+    "ruolo": "customer"
+  },
+  {
+    "id": 16,
+    "email": "chiara.russo@example.com",
+    "nome": "Chiara",
+    "cognome": "Russo",
+    "ruolo": "customer"
+  }
+]

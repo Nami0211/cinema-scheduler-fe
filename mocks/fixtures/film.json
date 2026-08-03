@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "titolo": "Le Ombre di Settembre",
+    "durataMinuti": 118,
+    "genere": "Drammatico",
+    "ratingEta": "T"
+  },
+  {
+    "id": 2,
+    "titolo": "Missione Orizzonte",
+    "durataMinuti": 132,
+    "genere": "Fantascienza",
+    "ratingEta": "T"
+  },
+  {
+    "id": 3,
+    "titolo": "Risata a Mezzanotte",
+    "durataMinuti": 97,
+    "genere": "Commedia",
+    "ratingEta": "T"
+  },
+  {
+    "id": 4,
+    "titolo": "Il Silenzio del Bosco",
+    "durataMinuti": 105,
+    "genere": "Horror",
+    "ratingEta": "14+"
+  },
+  {
+    "id": 5,
+    "titolo": "Cuori in Tempesta",
+    "durataMinuti": 110,
+    "genere": "Romantico",
+    "ratingEta": "T"
+  },
+  {
+    "id": 6,
+    "titolo": "Ultima Frontiera",
+    "durataMinuti": 145,
+    "genere": "Azione",
+    "ratingEta": "14+"
+  },
+  {
+    "id": 7,
+    "titolo": "Il Colore della Memoria",
+    "durataMinuti": 101,
+    "genere": "Drammatico",
+    "ratingEta": "T"
+  },
+  {
+    "id": 8,
+    "titolo": "Notte Selvaggia",
+    "durataMinuti": 89,
+    "genere": "Horror",
+    "ratingEta": "18+"
+  }
+]
