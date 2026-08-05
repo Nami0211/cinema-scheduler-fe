@@ -1,0 +1,29 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-8);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.2;
+}
+
+.default {
+  background-color: var(--color-secondary);
+  color: var(--color-secondary-foreground);
+}
+
+.primary {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.success {
+  background-color: var(--color-success);
+  color: #fff;
+}
+
+.danger {
+  background-color: var(--color-danger);
+  color: #fff;
+}
