@@ -10,7 +10,8 @@
     "lint:fix": "eslint . --fix",
     "compile": "tsc --noEmit",
     "prettier": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "api:generate": "node scripts/generate-api.mjs"
   },
   "dependencies": {
     "classnames": "^2.5.1",
@@ -21,6 +22,7 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.40.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -31,5 +33,10 @@
     "lint-staged": "^16.4.0",
     "prettier": "^3.9.6",
     "typescript": "^5"
+  },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/api-client/"
+    ]
   }
 }

@@ -21,5 +21,8 @@
   "Home": {
     "welcome": "Benvenuto",
     "description": "Seleziona un'opzione dal menu per iniziare."
+  },
+  "Footer": {
+    "description": "Cinema Schedule"
   }
 }
