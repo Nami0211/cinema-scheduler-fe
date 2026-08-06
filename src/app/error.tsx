@@ -2,8 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
-import { Button } from '../ui/atoms/Button/Button';
-import styles from './error.module.css';
+
 export default function Error({
   error,
   reset,
@@ -19,12 +18,15 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className={styles.container}>
+    <div style={{ textAlign: 'center', padding: '4rem 1rem' }}>
       <h2>{t('title')}</h2>
-      <p className={styles.message}>{t('message')}</p>
-      <Button onClick={() => reset()} className={styles.button}>
+      <p style={{ marginTop: '1rem' }}>{t('message')}</p>
+      <button
+        onClick={() => reset()}
+        style={{ marginTop: '2rem', padding: '0.5rem 1rem', cursor: 'pointer' }}
+      >
         {tCommon('retry')}
-      </Button>
+      </button>
     </div>
   );
 }

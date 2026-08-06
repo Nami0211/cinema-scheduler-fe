@@ -15,15 +15,15 @@
 
 .primary {
   background-color: var(--color-primary);
-  color: var(--color-primary-foreground);
+  color: #fff;
 }
 
 .success {
   background-color: var(--color-success);
-  color: var(--color-success-foreground);
+  color: #fff;
 }
 
 .danger {
   background-color: var(--color-danger);
-  color: var(--color-danger-foreground);
+  color: #fff;
 }
