@@ -1,5 +1,5 @@
 .footer {
-  padding: 2rem;
+  padding: var(--space-32);
   text-align: center;
   border-top: 1px solid var(--foreground);
   margin-top: auto;
