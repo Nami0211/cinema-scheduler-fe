@@ -1,0 +1,13 @@
+.container {
+  text-align: center;
+  padding: var(--space-64) var(--space-16);
+}
+.message {
+  margin-top: var(--space-16);
+}
+.linkContainer {
+  margin-top: var(--space-32);
+}
+.link {
+  text-decoration: underline;
+}

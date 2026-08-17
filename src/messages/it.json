@@ -1,0 +1,28 @@
+{
+  "Common": {
+    "loading": "Caricamento in corso...",
+    "retry": "Riprova"
+  },
+  "Header": {
+    "schedule": "Palinsesto",
+    "myBookings": "Le mie prenotazioni",
+    "adminArea": "Area Admin",
+    "menuToggle": "Apri menu"
+  },
+  "Error": {
+    "title": "Qualcosa è andato storto!",
+    "message": "Si è verificato un errore imprevisto. Per favore riprova più tardi."
+  },
+  "NotFound": {
+    "title": "Pagina non trovata",
+    "message": "La pagina che stai cercando non esiste o è stata spostata.",
+    "backHome": "Torna alla home"
+  },
+  "Home": {
+    "welcome": "Benvenuto",
+    "description": "Seleziona un'opzione dal menu per iniziare."
+  },
+  "Footer": {
+    "description": "Cinema Schedule"
+  }
+}

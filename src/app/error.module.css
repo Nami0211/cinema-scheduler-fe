@@ -1,0 +1,12 @@
+.container {
+  text-align: center;
+  padding: var(--space-64) var(--space-16);
+}
+.message {
+  margin-top: var(--space-16);
+}
+.button {
+  margin-top: var(--space-32);
+  padding: var(--space-8) var(--space-16);
+  cursor: pointer;
+}

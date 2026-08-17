@@ -1,0 +1,100 @@
+:root {
+  /* Colors - Light Theme */
+  --color-background: #ffffff;
+  --color-foreground: #171717;
+  --color-primary: #0070f3;
+  --color-primary-hover: #0051a2;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #eaeaea;
+  --color-secondary-hover: #d4d4d4;
+  --color-secondary-foreground: #333333;
+  --color-muted: #888888;
+  --color-danger: #e00;
+  --color-danger-foreground: #ffffff;
+  --color-success: #10b981;
+  --color-success-foreground: #ffffff;
+  --color-border: #eaeaea;
+  --color-focus: rgba(0, 112, 243, 0.5);
+
+  /* Spacing */
+  --space-2: 0.125rem;
+  --space-4: 0.25rem;
+  --space-8: 0.5rem;
+  --space-12: 0.75rem;
+  --space-16: 1rem;
+  --space-24: 1.5rem;
+  --space-32: 2rem;
+  --space-48: 3rem;
+  --space-64: 4rem;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Font variables (values are injected by next/font, defined here to satisfy IDEs) */
+  --font-geist-sans: 'Geist', sans-serif;
+  --font-geist-mono: 'Geist Mono', monospace;
+}
+
+[data-theme='dark'] {
+  /* Colors - Dark Theme */
+  --color-background: #0a0a0a;
+  --color-foreground: #ededed;
+  --color-primary: #3291ff;
+  --color-primary-hover: #0070f3;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #333;
+  --color-secondary-hover: #444;
+  --color-secondary-foreground: #ededed;
+  --color-muted: #888888;
+  --color-danger: #f33;
+  --color-danger-foreground: #ffffff;
+  --color-success: #10b981;
+  --color-success-foreground: #ffffff;
+  --color-border: #333;
+  --color-focus: rgba(50, 145, 255, 0.5);
+}
+
+html {
+  height: 100%;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  color: var(--color-foreground);
+  background: var(--color-background);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
