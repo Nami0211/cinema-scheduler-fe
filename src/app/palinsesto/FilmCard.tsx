@@ -72,14 +72,14 @@ export default function FilmCard({ film, proiezioni }: FilmCardProps) {
             key={proiezione.id}
             proiezioneId={proiezione.id}
             dataOraInizio={
-              typeof proiezione.dataOraInizio === 'string'
-                ? proiezione.dataOraInizio
-                : (proiezione.dataOraInizio as Date).toISOString()
+              proiezione.dataOraInizio instanceof Date
+                ? proiezione.dataOraInizio.toISOString()
+                : String(proiezione.dataOraInizio)
             }
             dataOraFine={
-              typeof proiezione.dataOraFine === 'string'
-                ? proiezione.dataOraFine
-                : (proiezione.dataOraFine as Date).toISOString()
+              proiezione.dataOraFine instanceof Date
+                ? proiezione.dataOraFine.toISOString()
+                : String(proiezione.dataOraFine)
             }
             salaNome={proiezione.sala.nome}
           />
