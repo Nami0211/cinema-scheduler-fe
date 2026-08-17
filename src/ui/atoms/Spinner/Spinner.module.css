@@ -5,7 +5,7 @@
 }
 
 .circle {
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   border: 2px solid var(--color-border);
   border-top-color: currentColor;
   animation: spin 1s linear infinite;
@@ -14,18 +14,18 @@
 }
 
 .sm {
-  width: 16px;
-  height: 16px;
+  width: var(--space-16);
+  height: var(--space-16);
 }
 
 .md {
-  width: 24px;
-  height: 24px;
+  width: var(--space-24);
+  height: var(--space-24);
 }
 
 .lg {
-  width: 32px;
-  height: 32px;
+  width: var(--space-32);
+  height: var(--space-32);
 }
 
 @keyframes spin {

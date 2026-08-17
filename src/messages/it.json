@@ -8,10 +8,20 @@
     "network": "Errore di rete"
   },
   "Header": {
+    "logoText": "Cinema Aurora",
     "schedule": "Palinsesto",
     "myBookings": "Le mie prenotazioni",
     "adminArea": "Area Admin",
-    "menuToggle": "Apri menu"
+    "menuToggle": "Apri menu",
+    "mainNavAria": "Navigazione principale"
+  },
+  "Footer": {
+    "description": "Cinema Aurora",
+    "tagline": "La tua serata inizia qui.",
+    "copyright": "Tutti i diritti riservati.",
+    "linkSchedule": "Palinsesto",
+    "linkBookings": "Prenotazioni",
+    "linkAdmin": "Area Admin"
   },
   "Error": {
     "title": "Qualcosa è andato storto!",
@@ -26,7 +36,23 @@
     "welcome": "Benvenuto",
     "description": "Seleziona un'opzione dal menu per iniziare."
   },
-  "Footer": {
-    "description": "Cinema Schedule"
+  "Palinsesto": {
+    "title": "Palinsesto",
+    "subtitle": "Scopri gli spettacoli in programmazione",
+    "today": "Oggi",
+    "noShowsTitle": "Nessuno spettacolo",
+    "noShowsText": "Non ci sono spettacoli in programmazione per il {data}.",
+    "noShowsHint": "Prova a selezionare un altro giorno.",
+    "errorTitle": "Impossibile caricare il palinsesto",
+    "errorMessage": "Si è verificato un errore durante il caricamento degli spettacoli.",
+    "retry": "Riprova",
+    "duration": "{minutes} min",
+    "rating": "{rating}",
+    "ratingAriaLabel": "Rating età: {rating}",
+    "ongoing": "In corso",
+    "ongoingAriaLabel": "Spettacolo in corso",
+    "showtimeUntil": "fino alle {time}",
+    "daySelectorAria": "Seleziona giorno",
+    "loadingAria": "Caricamento palinsesto..."
   }
 }

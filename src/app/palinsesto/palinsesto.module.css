@@ -1,0 +1,494 @@
+/* ═══════════════════════════════════════════════════════════════════
+   palinsesto.module.css — stile cinema scuro, ispirato a idealcityplex.it
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── Shimmer skeleton ────────────────────────────────────────────── */
+@keyframes shimmer {
+  0% {
+    background-position: -600px 0;
+  }
+  100% {
+    background-position: 600px 0;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeletonBase {
+  background: linear-gradient(
+    90deg,
+    var(--color-skeleton-base) 25%,
+    var(--color-skeleton-hi) 50%,
+    var(--color-skeleton-base) 75%
+  );
+  background-size: 1200px 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── Page layout ─────────────────────────────────────────────────── */
+.page {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: var(--space-48) var(--space-24);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+}
+
+/* ─── Page header ─────────────────────────────────────────────────── */
+.pageHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding-bottom: var(--space-24);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pageTitle {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-extrabold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-foreground);
+}
+
+.pageTitle span {
+  background: var(--gradient-gold-h);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pageSubtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ─── Day Selector ────────────────────────────────────────────────── */
+.daySelectorWrapper {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.daySelectorWrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.daySelector {
+  display: flex;
+  gap: var(--space-8);
+  padding-bottom: var(--space-4);
+  min-width: max-content;
+}
+
+.dayButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-8) var(--space-16);
+  min-width: var(--day-button-width);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-elevated);
+  color: var(--color-muted);
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s,
+    color 0.15s,
+    box-shadow 0.15s;
+  font-family: var(--font-sans);
+}
+
+.dayButton:hover {
+  border-color: var(--color-gold);
+  color: var(--color-foreground);
+  background: rgba(238, 119, 7, 0.08);
+}
+
+.dayButton:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+.dayButtonActive {
+  background: var(--gradient-gold);
+  border-color: transparent;
+  color: var(--color-bg-card);
+  box-shadow: var(--shadow-gold);
+}
+
+.dayButtonActive:hover {
+  background: var(--gradient-gold);
+  color: var(--color-bg-card);
+}
+
+.dayName {
+  font-size: var(--font-size-2xs-plus);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.dayDate {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.dayButtonSkeleton {
+  composes: skeletonBase;
+  width: var(--day-button-width);
+  height: var(--day-button-height);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+/* ─── Film list ─────────────────────────────────────────────────── */
+.filmGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* ─── Film Card ─────────────────────────────────────────────────── */
+.filmCard {
+  display: grid;
+  grid-template-columns: var(--poster-width) 1fr auto;
+  gap: var(--space-24);
+  padding: var(--space-24);
+  background: var(--color-bg-card);
+  border-bottom: 1px solid var(--color-border);
+  transition: background 0.15s ease;
+  align-items: start;
+}
+
+.filmCard:last-child {
+  border-bottom: none;
+}
+
+.filmCard:hover {
+  background: var(--color-bg-card-hover);
+}
+
+.filmPoster {
+  width: var(--poster-width);
+  height: var(--poster-height);
+  border-radius: var(--radius-md);
+  background: linear-gradient(
+    135deg,
+    var(--color-secondary-hover) 0%,
+    var(--color-bg-elevated) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: var(--font-size-emoji);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.filmPoster::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.6));
+}
+
+.filmPosterEmoji {
+  font-size: var(--font-size-emoji);
+  z-index: 1;
+}
+
+/* ─── Film Info ─────────────────────────────────────────────────── */
+.filmInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  min-width: 0;
+}
+
+.filmCardHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-12);
+}
+
+.filmTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-extrabold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-foreground);
+  line-height: 1.25;
+}
+
+.filmMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
+  align-items: center;
+}
+
+.filmGenre,
+.filmDuration {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+}
+
+.filmDuration::before {
+  content: '·';
+  margin-right: var(--space-12);
+}
+
+.filmRatingWrapper {
+  display: flex;
+  align-items: center;
+  margin-top: var(--space-4);
+}
+
+/* ─── Rating Badge ────────────────────────────────────────────────── */
+.ratingBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4) var(--space-12);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-extrabold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  border: 1.5px solid currentColor;
+}
+
+.ratingT {
+  color: var(--color-rating-safe);
+  background: var(--color-rating-safe-bg);
+}
+
+.rating14 {
+  color: var(--color-rating-warn);
+  background: var(--color-rating-warn-bg);
+}
+
+.rating18 {
+  color: var(--color-rating-danger-lt);
+  background: var(--color-rating-danger-lt-bg);
+}
+
+/* ─── Showtimes ─────────────────────────────────────────────────── */
+.showtimesList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-width: var(--showtimes-col-min);
+  max-width: var(--showtimes-col-max);
+}
+
+/* ─── Showtime Chip ───────────────────────────────────────────────── */
+.showtimeChip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-8) var(--space-12);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-elevated);
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s,
+    box-shadow 0.15s;
+  min-width: var(--day-button-width);
+}
+
+.showtimeChip:hover {
+  border-color: var(--color-gold);
+  background: rgba(238, 119, 7, 0.1);
+  box-shadow: 0 2px 12px rgba(238, 119, 7, 0.2);
+}
+
+/* In corso */
+.showtimeOngoing {
+  border-color: var(--color-ongoing);
+  background: var(--color-ongoing-bg);
+}
+
+.showtimeOngoing:hover {
+  border-color: var(--color-ongoing);
+}
+
+/* Terminato */
+.showtimePast {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.showtimeTime {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.showtimeStart {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-gold);
+  line-height: 1;
+}
+
+.showtimeEnd {
+  font-size: var(--font-size-2xs);
+  color: var(--color-muted);
+}
+
+.showtimeMeta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.showtimeSala {
+  font-size: var(--font-size-2xs-plus);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.showtimeBadgeOngoing {
+  font-size: var(--font-size-3xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-ongoing);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ─── Film Card Skeleton ──────────────────────────────────────────── */
+.filmCardSkeleton {
+  pointer-events: none;
+}
+
+.skeletonLine {
+  composes: skeletonBase;
+}
+
+.skeletonTitle {
+  height: var(--space-20);
+  width: 60%;
+}
+.skeletonMeta {
+  height: var(--space-12);
+  width: 35%;
+}
+.skeletonBadge {
+  composes: skeletonBase;
+  width: var(--space-32);
+  height: var(--space-20);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.showtimeChipSkeleton {
+  flex-direction: column;
+  align-items: flex-start;
+  pointer-events: none;
+}
+
+.skeletonShowtime {
+  height: var(--space-20);
+  width: var(--space-52);
+}
+.skeletonSala {
+  height: var(--space-10);
+  width: var(--space-40);
+}
+
+/* ─── Empty State ─────────────────────────────────────────────────── */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-64) var(--space-32);
+  gap: var(--space-16);
+  color: var(--color-muted);
+}
+
+.emptyStateIcon {
+  width: var(--icon-size-lg);
+  height: var(--icon-size-lg);
+  color: var(--color-secondary-hover);
+}
+.emptyStateTitle {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.emptyStateText {
+  font-size: var(--font-size-sm);
+  max-width: var(--empty-state-max-width);
+}
+.emptyStateHint {
+  font-size: var(--font-size-xs);
+  opacity: 0.6;
+}
+
+/* ─── Error State ─────────────────────────────────────────────────── */
+.errorState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-64) var(--space-32);
+  gap: var(--space-16);
+}
+
+.errorStateIcon {
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+  color: var(--color-danger);
+  opacity: 0.7;
+}
+.errorStateTitle {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-foreground);
+}
+.errorStateText {
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+  max-width: var(--error-state-max-width);
+}
+.retryButton {
+  margin-top: var(--space-8);
+  min-width: var(--retry-button-min-width);
+}
