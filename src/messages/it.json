@@ -3,6 +3,10 @@
     "loading": "Caricamento in corso...",
     "retry": "Riprova"
   },
+  "errors": {
+    "unknown": "Errore sconosciuto",
+    "network": "Errore di rete"
+  },
   "Header": {
     "schedule": "Palinsesto",
     "myBookings": "Le mie prenotazioni",

@@ -20,9 +20,16 @@
     ],
     "baseUrl": "./src",
     "paths": {
-      "components/": ["components/"],
-      "ui/": ["ui/"],
-      "utils/": ["utils/"]
+      "api-client/*": ["api-client/*"],
+      "app/*": ["app/*"],
+      "components/*": ["components/*"],
+      "hooks/*": ["hooks/*"],
+      "i18n/*": ["i18n/*"],
+      "messages/*": ["messages/*"],
+      "services/*": ["services/*"],
+      "store/*": ["store/*"],
+      "ui/*": ["ui/*"],
+      "utils/*": ["utils/*"]
     }
   },
   "include": [
