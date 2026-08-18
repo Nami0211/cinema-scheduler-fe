@@ -20,7 +20,7 @@ function toItalianDateString(isoUtc: string): string {
 export const handlers = [
   // ─── Film ────────────────────────────────────────────────────────────────
 
-  http.get('http://localhost:3000/api/films', () => {
+  http.get('/api/films', () => {
     return HttpResponse.json({
       items: films,
       total: films.length,
@@ -29,7 +29,7 @@ export const handlers = [
     });
   }),
 
-  http.get('http://localhost:3000/api/films/:id', ({ params }) => {
+  http.get('/api/films/:id', ({ params }) => {
     const id = Number(params.id);
     const film = films.find((f: { id: number }) => f.id === id);
 
@@ -45,7 +45,7 @@ export const handlers = [
 
   // ─── Sale ─────────────────────────────────────────────────────────────────
 
-  http.get('http://localhost:3000/api/sale', () => {
+  http.get('/api/sale', () => {
     return HttpResponse.json({
       items: saleRaw,
       total: saleRaw.length,
@@ -54,7 +54,7 @@ export const handlers = [
 
   // ─── Proiezioni per data ──────────────────────────────────────────────────
 
-  http.get('http://localhost:3000/api/proiezioni', ({ request }) => {
+  http.get('/api/proiezioni', ({ request }) => {
     const url = new URL(request.url);
     const dataParam = url.searchParams.get('data'); // atteso: "YYYY-MM-DD"
 

@@ -12,7 +12,6 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 /**
  *
  * @export
@@ -47,9 +46,7 @@ export function instanceOfProiezioneInput(
 ): value is ProiezioneInput {
   if (!('filmId' in value) || value['filmId'] === undefined) return false;
   if (!('salaId' in value) || value['salaId'] === undefined) return false;
-  if (!('dataOraInizio' in value) || value['dataOraInizio'] === undefined)
-    return false;
-  return true;
+  return !(!('dataOraInizio' in value) || value['dataOraInizio'] === undefined);
 }
 
 export function ProiezioneInputFromJSON(json: any): ProiezioneInput {

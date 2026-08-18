@@ -7,6 +7,7 @@
 Quando forki questo repository, GitHub **non copia issue, milestone né label**: il fork porta con sé solo il codice (commit, branch, tag). Ogni nuovo junior che forka il progetto riparte quindi già "pulito" su questo fronte — non serve nessun reset distruttivo, serve solo **ripopolare** quei dati nel nuovo fork a partire dall'unica fonte di verità: [`issues-progetto-cinema-fe.md`](../issues-progetto-cinema-fe.md).
 
 `bootstrap-github.mjs` legge quel file, lo parsa, e crea su GitHub (via API REST):
+
 - le 6 milestone
 - tutte le label usate nelle issue (con colori assegnati per leggibilità)
 - le 19 issue, ciascuna collegata alla milestone e alle label corrette
@@ -37,7 +38,7 @@ node scripts/bootstrap-github.mjs             # esecuzione reale
 
 ## Se modifichi le issue
 
-Il markdown resta l'unica fonte di verità: modifica `issues-progetto-cinema-fe.md`, poi rilancia il bootstrap. Le milestone/label/issue già esistenti (stesso titolo) vengono lasciate intatte — se hai cambiato il *contenuto* di una issue già creata su un repository esistente, questo script non la aggiorna (per design: non vogliamo che un rilancio automatico sovrascriva silenziosamente il lavoro/i commenti di un junior su una issue già in corso). In quel caso l'aggiornamento va fatto a mano sulla issue esistente.
+Il markdown resta l'unica fonte di verità: modifica `issues-progetto-cinema-fe.md`, poi rilancia il bootstrap. Le milestone/label/issue già esistenti (stesso titolo) vengono lasciate intatte — se hai cambiato il _contenuto_ di una issue già creata su un repository esistente, questo script non la aggiorna (per design: non vogliamo che un rilancio automatico sovrascriva silenziosamente il lavoro/i commenti di un junior su una issue già in corso). In quel caso l'aggiornamento va fatto a mano sulla issue esistente.
 
 Il parser si aspetta il formato del markdown così com'è: `## Milestone N — Titolo`, `### Issue #N — Titolo`, e una riga `**Labels**: ...` subito sotto il titolo dell'issue. Cambiare quel formato significa aggiornare anche il parser.
 
@@ -84,6 +85,6 @@ export CONFIRM=RESET
 
 ### Cosa NON fa (limiti da conoscere)
 
-- Non tocca le issue/milestone/label: quelle restano quelle già create (eventualmente chiuse/commentate dal junior). Se vuoi anche quelle "pulite", ricordati che un nuovo fork le azzera comunque in automatico da solo (vedi sopra) — questo script serve per il caso in cui riusi *lo stesso* repository invece di far fare un nuovo fork.
+- Non tocca le issue/milestone/label: quelle restano quelle già create (eventualmente chiuse/commentate dal junior). Se vuoi anche quelle "pulite", ricordati che un nuovo fork le azzera comunque in automatico da solo (vedi sopra) — questo script serve per il caso in cui riusi _lo stesso_ repository invece di far fare un nuovo fork.
 - Non elimina Pull Request: eliminare il branch sorgente chiude automaticamente le PR aperte su di esso, ma l'oggetto PR resta visibile nello storico (chiuso), GitHub non lo cancella.
 - Se il branch di default ha protezioni attive (branch protection rules) che bloccano il force-push, lo script fallisce a quel passaggio: va rimossa la protezione temporaneamente, oppure non impostarla su repository pensati per essere resettati.

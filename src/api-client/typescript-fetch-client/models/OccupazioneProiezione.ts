@@ -12,7 +12,6 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 /**
  *
  * @export
@@ -71,12 +70,10 @@ export function instanceOfOccupazioneProiezione(
   if (!('capienza' in value) || value['capienza'] === undefined) return false;
   if (!('postiPrenotati' in value) || value['postiPrenotati'] === undefined)
     return false;
-  if (
+  return !(
     !('percentualeOccupazione' in value) ||
     value['percentualeOccupazione'] === undefined
-  )
-    return false;
-  return true;
+  );
 }
 
 export function OccupazioneProiezioneFromJSON(

@@ -14,16 +14,11 @@
 
 import * as runtime from '../runtime';
 import type {
-  ErrorResponse,
   Prenotazione,
   ProiezioniIdPrenotazioniPostRequest,
 } from '../models/index';
 import {
-  ErrorResponseFromJSON,
-  ErrorResponseToJSON,
   PrenotazioneFromJSON,
-  PrenotazioneToJSON,
-  ProiezioniIdPrenotazioniPostRequestFromJSON,
   ProiezioniIdPrenotazioniPostRequestToJSON,
 } from '../models/index';
 

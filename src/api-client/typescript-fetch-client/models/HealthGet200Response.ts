@@ -12,7 +12,6 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 /**
  *
  * @export
@@ -33,8 +32,7 @@ export interface HealthGet200Response {
 export function instanceOfHealthGet200Response(
   value: object
 ): value is HealthGet200Response {
-  if (!('status' in value) || value['status'] === undefined) return false;
-  return true;
+  return !(!('status' in value) || value['status'] === undefined);
 }
 
 export function HealthGet200ResponseFromJSON(json: any): HealthGet200Response {

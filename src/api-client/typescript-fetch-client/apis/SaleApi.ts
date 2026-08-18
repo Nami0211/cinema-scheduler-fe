@@ -14,7 +14,7 @@
 
 import * as runtime from '../runtime';
 import type { Sala } from '../models/index';
-import { SalaFromJSON, SalaToJSON } from '../models/index';
+import { SalaFromJSON } from '../models/index';
 
 export interface CinemasCinemaIdSaleGetRequest {
   cinemaId: number;

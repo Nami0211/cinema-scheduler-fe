@@ -22,9 +22,7 @@ interface PalinsestoClientProps {
  * Raggruppa le proiezioni per filmId.
  * Ritorna un array ordinato alfabeticamente per titolo film.
  */
-function groupByFilm(
-  proiezioni: ProiezioneArricchita[]
-): Array<{
+function groupByFilm(proiezioni: ProiezioneArricchita[]): Array<{
   film: ProiezioneArricchita['film'];
   proiezioni: ProiezioneArricchita[];
 }> {
@@ -61,17 +59,12 @@ export default function PalinsestoClient({
   const {
     data: proiezioni,
     isLoading,
-    isFetching,
     isError,
     error,
     refetch,
   } = useGetProiezioniByDataQuery(dataSelezionata);
 
   const gruppiFilm = useMemo(() => groupByFilm(proiezioni ?? []), [proiezioni]);
-
-  if (isLoading || isFetching) {
-    return <PalinsestoSkeleton />;
-  }
 
   const errorMessage =
     isError && error ? (error as CustomError).message : undefined;
@@ -91,7 +84,9 @@ export default function PalinsestoClient({
       />
 
       {/* Contenuto principale */}
-      {isError ? (
+      {isLoading ? (
+        <PalinsestoSkeleton />
+      ) : isError ? (
         <ErrorState onRetry={refetch} message={errorMessage} />
       ) : gruppiFilm.length === 0 ? (
         <EmptyState data={dataSelezionata} />

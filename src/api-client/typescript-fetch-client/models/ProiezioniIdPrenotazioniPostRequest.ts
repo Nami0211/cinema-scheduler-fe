@@ -12,14 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { Posto } from './Posto';
-import {
-  PostoFromJSON,
-  PostoFromJSONTyped,
-  PostoToJSON,
-  PostoToJSONTyped,
-} from './Posto';
+import { PostoFromJSON, PostoToJSON } from './Posto';
 
 /**
  *
@@ -41,8 +35,7 @@ export interface ProiezioniIdPrenotazioniPostRequest {
 export function instanceOfProiezioniIdPrenotazioniPostRequest(
   value: object
 ): value is ProiezioniIdPrenotazioniPostRequest {
-  if (!('posti' in value) || value['posti'] === undefined) return false;
-  return true;
+  return !(!('posti' in value) || value['posti'] === undefined);
 }
 
 export function ProiezioniIdPrenotazioniPostRequestFromJSON(

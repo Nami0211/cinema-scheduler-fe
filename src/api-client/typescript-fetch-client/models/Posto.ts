@@ -12,7 +12,6 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 /**
  *
  * @export
@@ -38,8 +37,7 @@ export interface Posto {
  */
 export function instanceOfPosto(value: object): value is Posto {
   if (!('riga' in value) || value['riga'] === undefined) return false;
-  if (!('colonna' in value) || value['colonna'] === undefined) return false;
-  return true;
+  return !(!('colonna' in value) || value['colonna'] === undefined);
 }
 
 export function PostoFromJSON(json: any): Posto {

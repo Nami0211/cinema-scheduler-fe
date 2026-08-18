@@ -12,20 +12,12 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { Posto } from './Posto';
-import {
-  PostoFromJSON,
-  PostoFromJSONTyped,
-  PostoToJSON,
-  PostoToJSONTyped,
-} from './Posto';
+import { PostoFromJSON, PostoToJSON } from './Posto';
 import type { StatoPrenotazione } from './StatoPrenotazione';
 import {
   StatoPrenotazioneFromJSON,
-  StatoPrenotazioneFromJSONTyped,
   StatoPrenotazioneToJSON,
-  StatoPrenotazioneToJSONTyped,
 } from './StatoPrenotazione';
 
 /**
@@ -82,8 +74,7 @@ export function instanceOfPrenotazione(value: object): value is Prenotazione {
   if (!('utenteId' in value) || value['utenteId'] === undefined) return false;
   if (!('stato' in value) || value['stato'] === undefined) return false;
   if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
-  if (!('posti' in value) || value['posti'] === undefined) return false;
-  return true;
+  return !(!('posti' in value) || value['posti'] === undefined);
 }
 
 export function PrenotazioneFromJSON(json: any): Prenotazione {

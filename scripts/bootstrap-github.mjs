@@ -31,14 +31,18 @@
  * fornito automaticamente dal runner, con permessi limitati al repository corrente).
  */
 
-import { readFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import path from "node:path";
+import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ISSUES_MD_PATH = path.join(__dirname, "..", "issues-progetto-cinema-fe.md");
+const ISSUES_MD_PATH = path.join(
+  __dirname,
+  '..',
+  'issues-progetto-cinema-fe.md'
+);
 
-const DRY_RUN = process.argv.includes("--dry-run");
+const DRY_RUN = process.argv.includes('--dry-run');
 
 const TOKEN = process.env.GITHUB_TOKEN;
 const REPOSITORY = process.env.GITHUB_REPOSITORY; // formato "owner/repo"
@@ -47,29 +51,31 @@ if (!TOKEN) {
   console.error("Errore: variabile d'ambiente GITHUB_TOKEN mancante.");
   process.exit(1);
 }
-if (!REPOSITORY || !REPOSITORY.includes("/")) {
-  console.error("Errore: variabile d'ambiente GITHUB_REPOSITORY mancante o non nel formato 'owner/repo'.");
+if (!REPOSITORY || !REPOSITORY.includes('/')) {
+  console.error(
+    "Errore: variabile d'ambiente GITHUB_REPOSITORY mancante o non nel formato 'owner/repo'."
+  );
   process.exit(1);
 }
-const [OWNER, REPO] = REPOSITORY.split("/");
+const [OWNER, REPO] = REPOSITORY.split('/');
 
 const API_BASE = `https://api.github.com/repos/${OWNER}/${REPO}`;
 
 // Colori pensati solo per leggibilità nella UI di GitHub: nessun impatto funzionale.
 const LABEL_COLORS = {
-  setup: "0e8a16",
-  "good-first-issue": "7057ff",
-  ui: "1d76db",
-  feature: "0052cc",
-  api: "5319e7",
-  state: "0b6b8f",
-  docs: "c5def5",
-  "business-logic": "b60205",
-  refactor: "fbca04",
-  performance: "d93f0b",
-  security: "e11d21",
-  testing: "bfd4f2",
-  "ci-cd": "006b75",
+  setup: '0e8a16',
+  'good-first-issue': '7057ff',
+  ui: '1d76db',
+  feature: '0052cc',
+  api: '5319e7',
+  state: '0b6b8f',
+  docs: 'c5def5',
+  'business-logic': 'b60205',
+  refactor: 'fbca04',
+  performance: 'd93f0b',
+  security: 'e11d21',
+  testing: 'bfd4f2',
+  'ci-cd': '006b75',
 };
 
 /**
@@ -88,7 +94,7 @@ const LABEL_COLORS = {
  * a non far finire la checklist finale del documento in coda all'ultima issue.
  */
 function parseIssuesMarkdown(markdown) {
-  const lines = markdown.split("\n");
+  const lines = markdown.split('\n');
 
   const milestones = []; // { title, description }
   const issues = []; // { number, title, labels, body, milestoneTitle }
@@ -100,7 +106,9 @@ function parseIssuesMarkdown(markdown) {
 
   const flushMilestone = () => {
     if (currentMilestone) {
-      currentMilestone.description = currentMilestoneDescLines.join("\n").trim();
+      currentMilestone.description = currentMilestoneDescLines
+        .join('\n')
+        .trim();
       milestones.push(currentMilestone);
     }
     currentMilestone = null;
@@ -110,8 +118,8 @@ function parseIssuesMarkdown(markdown) {
   const flushIssue = () => {
     if (currentIssue) {
       currentIssue.body = currentIssueBodyLines
-        .join("\n")
-        .replace(/\n{3,}/g, "\n\n")
+        .join('\n')
+        .replace(/\n{3,}/g, '\n\n')
         .trim();
       issues.push(currentIssue);
     }
@@ -127,7 +135,7 @@ function parseIssuesMarkdown(markdown) {
     if (milestoneMatch) {
       flushIssue();
       flushMilestone();
-      currentMilestone = { title: milestoneMatch[1].trim(), description: "" };
+      currentMilestone = { title: milestoneMatch[1].trim(), description: '' };
       continue;
     }
 
@@ -137,7 +145,7 @@ function parseIssuesMarkdown(markdown) {
         number: Number(issueMatch[1]),
         title: issueMatch[2].trim(),
         labels: [],
-        body: "",
+        body: '',
         milestoneTitle: currentMilestone ? currentMilestone.title : null,
       };
       continue;
@@ -155,17 +163,17 @@ function parseIssuesMarkdown(markdown) {
       const labelsMatch = line.match(/^\*\*Labels\*\*:\s*(.+)$/);
       if (labelsMatch) {
         currentIssue.labels = labelsMatch[1]
-          .split(",")
-          .map((s) => s.trim().replace(/`/g, ""))
+          .split(',')
+          .map((s) => s.trim().replace(/`/g, ''))
           .filter(Boolean);
         continue; // non finisce nel corpo, evitiamo di duplicarla
       }
-      if (line.trim() === "---") continue;
+      if (line.trim() === '---') continue;
       currentIssueBodyLines.push(line);
     } else if (currentMilestone) {
       // testo introduttivo della milestone, prima della prima issue
-      if (line.trim() === "---") continue;
-      if (line.trim().startsWith("#")) continue; // non risalire ad altre sezioni
+      if (line.trim() === '---') continue;
+      if (line.trim().startsWith('#')) continue; // non risalire ad altre sezioni
       currentMilestoneDescLines.push(line);
     }
   }
@@ -181,15 +189,17 @@ async function githubRequest(endpoint, options = {}) {
     ...options,
     headers: {
       Authorization: `Bearer ${TOKEN}`,
-      Accept: "application/vnd.github+json",
-      "X-GitHub-Api-Version": "2022-11-28",
-      "Content-Type": "application/json",
+      Accept: 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28',
+      'Content-Type': 'application/json',
       ...(options.headers || {}),
     },
   });
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`GitHub API ${options.method || "GET"} ${endpoint} → ${res.status}: ${text}`);
+    throw new Error(
+      `GitHub API ${options.method || 'GET'} ${endpoint} → ${res.status}: ${text}`
+    );
   }
   return res.status === 204 ? null : res.json();
 }
@@ -200,7 +210,7 @@ async function paginateAll(endpoint) {
   // 100 è il massimo per_page consentito dall'API REST di GitHub
   while (true) {
     const batch = await githubRequest(
-      `${endpoint}${endpoint.includes("?") ? "&" : "?"}per_page=100&page=${page}&state=all`
+      `${endpoint}${endpoint.includes('?') ? '&' : '?'}per_page=100&page=${page}&state=all`
     );
     results.push(...batch);
     if (batch.length < 100) break;
@@ -211,7 +221,7 @@ async function paginateAll(endpoint) {
 
 async function ensureLabels(labelNames) {
   console.log(`\n→ Label (${labelNames.length} da verificare/creare)`);
-  const existing = await paginateAll("/labels");
+  const existing = await paginateAll('/labels');
   const existingNames = new Set(existing.map((l) => l.name));
 
   for (const name of labelNames) {
@@ -219,13 +229,13 @@ async function ensureLabels(labelNames) {
       console.log(`  già presente: ${name}`);
       continue;
     }
-    console.log(`  ${DRY_RUN ? "[dry-run] creerei" : "creo"}: ${name}`);
+    console.log(`  ${DRY_RUN ? '[dry-run] creerei' : 'creo'}: ${name}`);
     if (DRY_RUN) continue;
-    await githubRequest("/labels", {
-      method: "POST",
+    await githubRequest('/labels', {
+      method: 'POST',
       body: JSON.stringify({
         name,
-        color: LABEL_COLORS[name] || "ededed",
+        color: LABEL_COLORS[name] || 'ededed',
       }),
     });
   }
@@ -233,7 +243,7 @@ async function ensureLabels(labelNames) {
 
 async function ensureMilestones(milestones) {
   console.log(`\n→ Milestone (${milestones.length} da verificare/creare)`);
-  const existing = await paginateAll("/milestones");
+  const existing = await paginateAll('/milestones');
   const byTitle = new Map(existing.map((m) => [m.title, m]));
 
   const titleToNumber = new Map();
@@ -244,10 +254,10 @@ async function ensureMilestones(milestones) {
       titleToNumber.set(m.title, found.number);
       continue;
     }
-    console.log(`  ${DRY_RUN ? "[dry-run] creerei" : "creo"}: ${m.title}`);
+    console.log(`  ${DRY_RUN ? '[dry-run] creerei' : 'creo'}: ${m.title}`);
     if (DRY_RUN) continue;
-    const created = await githubRequest("/milestones", {
-      method: "POST",
+    const created = await githubRequest('/milestones', {
+      method: 'POST',
       body: JSON.stringify({
         title: m.title,
         description: m.description || undefined,
@@ -260,7 +270,7 @@ async function ensureMilestones(milestones) {
 
 async function ensureIssues(issues, milestoneTitleToNumber) {
   console.log(`\n→ Issue (${issues.length} da verificare/creare)`);
-  const existing = await paginateAll("/issues");
+  const existing = await paginateAll('/issues');
   const existingTitles = new Set(existing.map((i) => i.title));
 
   for (const issue of issues) {
@@ -269,7 +279,7 @@ async function ensureIssues(issues, milestoneTitleToNumber) {
       console.log(`  già presente: ${fullTitle}`);
       continue;
     }
-    console.log(`  ${DRY_RUN ? "[dry-run] creerei" : "creo"}: ${fullTitle}`);
+    console.log(`  ${DRY_RUN ? '[dry-run] creerei' : 'creo'}: ${fullTitle}`);
     if (DRY_RUN) continue;
 
     const payload = {
@@ -277,12 +287,15 @@ async function ensureIssues(issues, milestoneTitleToNumber) {
       body: issue.body,
       labels: issue.labels,
     };
-    if (issue.milestoneTitle && milestoneTitleToNumber.has(issue.milestoneTitle)) {
+    if (
+      issue.milestoneTitle &&
+      milestoneTitleToNumber.has(issue.milestoneTitle)
+    ) {
       payload.milestone = milestoneTitleToNumber.get(issue.milestoneTitle);
     }
 
-    await githubRequest("/issues", {
-      method: "POST",
+    await githubRequest('/issues', {
+      method: 'POST',
       body: JSON.stringify(payload),
     });
   }
@@ -290,12 +303,17 @@ async function ensureIssues(issues, milestoneTitleToNumber) {
 
 async function main() {
   console.log(`Repository target: ${OWNER}/${REPO}`);
-  if (DRY_RUN) console.log("Modalità DRY-RUN: nessuna scrittura verrà effettuata su GitHub.\n");
+  if (DRY_RUN)
+    console.log(
+      'Modalità DRY-RUN: nessuna scrittura verrà effettuata su GitHub.\n'
+    );
 
-  const markdown = await readFile(ISSUES_MD_PATH, "utf-8");
+  const markdown = await readFile(ISSUES_MD_PATH, 'utf-8');
   const { milestones, issues } = parseIssuesMarkdown(markdown);
 
-  console.log(`Trovate nel markdown: ${milestones.length} milestone, ${issues.length} issue.`);
+  console.log(
+    `Trovate nel markdown: ${milestones.length} milestone, ${issues.length} issue.`
+  );
 
   const allLabels = [...new Set(issues.flatMap((i) => i.labels))].sort();
 
@@ -303,10 +321,10 @@ async function main() {
   const milestoneTitleToNumber = await ensureMilestones(milestones);
   await ensureIssues(issues, milestoneTitleToNumber);
 
-  console.log("\nCompletato.");
+  console.log('\nCompletato.');
 }
 
 main().catch((err) => {
-  console.error("\nErrore durante il bootstrap:", err.message);
+  console.error('\nErrore durante il bootstrap:', err.message);
   process.exit(1);
 });

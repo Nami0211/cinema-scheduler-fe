@@ -12,21 +12,10 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { Sala } from './Sala';
-import {
-  SalaFromJSON,
-  SalaFromJSONTyped,
-  SalaToJSON,
-  SalaToJSONTyped,
-} from './Sala';
+import { SalaFromJSON, SalaToJSON } from './Sala';
 import type { Film } from './Film';
-import {
-  FilmFromJSON,
-  FilmFromJSONTyped,
-  FilmToJSON,
-  FilmToJSONTyped,
-} from './Film';
+import { FilmFromJSON, FilmToJSON } from './Film';
 
 /**
  *
@@ -87,9 +76,7 @@ export function instanceOfProiezione(value: object): value is Proiezione {
   if (!('salaId' in value) || value['salaId'] === undefined) return false;
   if (!('dataOraInizio' in value) || value['dataOraInizio'] === undefined)
     return false;
-  if (!('dataOraFine' in value) || value['dataOraFine'] === undefined)
-    return false;
-  return true;
+  return !(!('dataOraFine' in value) || value['dataOraFine'] === undefined);
 }
 
 export function ProiezioneFromJSON(json: any): Proiezione {

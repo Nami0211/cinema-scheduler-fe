@@ -15,21 +15,14 @@
 import * as runtime from '../runtime';
 import type {
   DisponibilitaPosti,
-  ErrorResponse,
   OccupazioneProiezione,
   Proiezione,
   ProiezioneInput,
 } from '../models/index';
 import {
   DisponibilitaPostiFromJSON,
-  DisponibilitaPostiToJSON,
-  ErrorResponseFromJSON,
-  ErrorResponseToJSON,
   OccupazioneProiezioneFromJSON,
-  OccupazioneProiezioneToJSON,
   ProiezioneFromJSON,
-  ProiezioneToJSON,
-  ProiezioneInputFromJSON,
   ProiezioneInputToJSON,
 } from '../models/index';
 

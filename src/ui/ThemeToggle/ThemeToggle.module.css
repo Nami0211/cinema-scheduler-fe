@@ -1,0 +1,43 @@
+.themeToggleBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
+  padding: var(--space-4);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  color: var(--color-foreground);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.themeToggleBtn:hover {
+  background: var(--color-bg-card-hover);
+  border-color: var(--color-gold);
+  transform: scale(1.05);
+}
+
+.themeToggleBtn:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+.icon {
+  font-size: var(--font-size-base);
+  line-height: 1;
+  user-select: none;
+}
+
+.placeholder {
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
+  border-radius: var(--radius-full);
+  background: transparent;
+  flex-shrink: 0;
+}

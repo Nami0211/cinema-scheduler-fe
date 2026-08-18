@@ -4,25 +4,25 @@ Questa cartella permette di sviluppare e testare il frontend **senza il backend 
 
 ## Cosa c'è dentro
 
-| Percorso | Contenuto | Da fare in |
-|---|---|---|
-| `fixtures/` | Dati di dominio in JSON, derivati dai dati di seed del backend | già presente |
-| `openapi-reference.json` | Spec OpenAPI di riferimento, **temporaneo** | già presente |
-| `handlers/` | Handler MSW che servono le fixture | issue #6 |
-| `mockFactory/` | Factory `factory.ts` + `@faker-js/faker` per i test | issue #6 |
+| Percorso                 | Contenuto                                                      | Da fare in   |
+| ------------------------ | -------------------------------------------------------------- | ------------ |
+| `fixtures/`              | Dati di dominio in JSON, derivati dai dati di seed del backend | già presente |
+| `openapi-reference.json` | Spec OpenAPI di riferimento, **temporaneo**                    | già presente |
+| `handlers/`              | Handler MSW che servono le fixture                             | issue #6     |
+| `mockFactory/`           | Factory `factory.ts` + `@faker-js/faker` per i test            | issue #6     |
 
 ## Le fixture
 
 Sono la conversione in JSON (camelCase) dei CSV di seed del backend, in `init-data/` del repository `cinema-scheduler-be`. **Sono gli stessi dati** che il backend carica nel proprio database: lo scenario mockato e quello reale coincidono, quindi quello che vedi in modalità mock è quello che vedrai col backend attivo.
 
-| File | Record | Note |
-|---|---|---|
-| `cinema.json` | 1 | Multiplex Aurora |
-| `sale.json` | 4 | Sala 1 (18×10), Sala 2 (12×10), Sala 3 (9×10), Sala 4 (10×6) |
-| `film.json` | 8 | Con `durataMinuti`, `genere`, `ratingEta` |
-| `proiezioni.json` | 78 | Palinsesto dal 2026-08-03 al 2026-08-09, orari in UTC |
-| `prenotazioni.json` | 1709 | Di cui 1542 attive; i posti sono annidati in `posti[]` |
-| `utenti.json` | 16 | 1 `admin`, 15 `customer`; **senza** password hash |
+| File                | Record | Note                                                         |
+| ------------------- | ------ | ------------------------------------------------------------ |
+| `cinema.json`       | 1      | Multiplex Aurora                                             |
+| `sale.json`         | 4      | Sala 1 (18×10), Sala 2 (12×10), Sala 3 (9×10), Sala 4 (10×6) |
+| `film.json`         | 8      | Con `durataMinuti`, `genere`, `ratingEta`                    |
+| `proiezioni.json`   | 78     | Palinsesto dal 2026-08-03 al 2026-08-09, orari in UTC        |
+| `prenotazioni.json` | 1709   | Di cui 1542 attive; i posti sono annidati in `posti[]`       |
+| `utenti.json`       | 16     | 1 `admin`, 15 `customer`; **senza** password hash            |
 
 Alcune cose da sapere prima di usarle:
 

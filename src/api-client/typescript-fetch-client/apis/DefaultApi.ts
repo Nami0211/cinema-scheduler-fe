@@ -14,10 +14,7 @@
 
 import * as runtime from '../runtime';
 import type { HealthGet200Response } from '../models/index';
-import {
-  HealthGet200ResponseFromJSON,
-  HealthGet200ResponseToJSON,
-} from '../models/index';
+import { HealthGet200ResponseFromJSON } from '../models/index';
 
 /**
  *

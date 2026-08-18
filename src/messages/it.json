@@ -13,7 +13,11 @@
     "myBookings": "Le mie prenotazioni",
     "adminArea": "Area Admin",
     "menuToggle": "Apri menu",
-    "mainNavAria": "Navigazione principale"
+    "mainNavAria": "Navigazione principale",
+    "themeToggle": "Cambia tema",
+    "themeDark": "Passa a tema scuro",
+    "themeLight": "Passa a tema chiaro",
+    "themeSystem": "Usa tema di sistema"
   },
   "Footer": {
     "description": "Cinema Aurora",

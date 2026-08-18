@@ -12,7 +12,6 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 /**
  *
  * @export
@@ -46,8 +45,7 @@ export function instanceOfErrorResponseError(
   value: object
 ): value is ErrorResponseError {
   if (!('code' in value) || value['code'] === undefined) return false;
-  if (!('message' in value) || value['message'] === undefined) return false;
-  return true;
+  return !(!('message' in value) || value['message'] === undefined);
 }
 
 export function ErrorResponseErrorFromJSON(json: any): ErrorResponseError {

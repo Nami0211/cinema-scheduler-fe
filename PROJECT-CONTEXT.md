@@ -4,12 +4,12 @@
 
 Multiplex Aurora è una catena cinematografica di medie dimensioni con una sola struttura, situata in un centro commerciale di periferia. Il cinema ha **4 sale**:
 
-| Sala | Capienza | Note |
-|------|----------|------|
+| Sala   | Capienza                         | Note                                                          |
+| ------ | -------------------------------- | ------------------------------------------------------------- |
 | Sala 1 | 180 posti (18 file × 10 colonne) | Sala principale, schermo grande, usata per le uscite di punta |
-| Sala 2 | 120 posti (12 file × 10 colonne) | |
-| Sala 3 | 90 posti (9 file × 10 colonne) | |
-| Sala 4 | 60 posti (10 file × 6 colonne) | La più piccola, spesso usata per film di nicchia o repliche |
+| Sala 2 | 120 posti (12 file × 10 colonne) |                                                               |
+| Sala 3 | 90 posti (9 file × 10 colonne)   |                                                               |
+| Sala 4 | 60 posti (10 file × 6 colonne)   | La più piccola, spesso usata per film di nicchia o repliche   |
 
 Il cinema proietta in media 6-8 film diversi a settimana, con più spettacoli al giorno per titolo (tipicamente pomeriggio/sera nei giorni feriali, aggiunta di mattinate nel weekend).
 
@@ -38,9 +38,9 @@ Un'**applicazione web** che copra due esperienze molto diverse sopra lo stesso b
 
 ## Vincoli di business da rispettare (raccolti parlando con lo staff)
 
-Sono gli stessi vincoli che il backend già applica. L'interfaccia **non è la fonte di verità**: non deve reimplementare queste regole come se fossero sue, ma deve renderle comprensibili all'utente *prima* che il backend risponda con un errore.
+Sono gli stessi vincoli che il backend già applica. L'interfaccia **non è la fonte di verità**: non deve reimplementare queste regole come se fossero sue, ma deve renderle comprensibili all'utente _prima_ che il backend risponda con un errore.
 
-- Tra una proiezione e la successiva nella stessa sala serve un **buffer di pulizia di 15 minuti**: se un film dura 120 minuti e inizia alle 18:00, la sala è occupata fino alle 20:15. Quando l'admin crea una proiezione in una sala già occupata, il backend risponde `409` — l'interfaccia deve spiegare *con quale proiezione* è in conflitto, non limitarsi a "errore".
+- Tra una proiezione e la successiva nella stessa sala serve un **buffer di pulizia di 15 minuti**: se un film dura 120 minuti e inizia alle 18:00, la sala è occupata fino alle 20:15. Quando l'admin crea una proiezione in una sala già occupata, il backend risponde `409` — l'interfaccia deve spiegare _con quale proiezione_ è in conflitto, non limitarsi a "errore".
 - Una prenotazione può essere **cancellata gratuitamente fino a 3 ore prima** dell'inizio dello spettacolo; dopo, la cancellazione non è permessa. Il pulsante "Cancella" non deve essere attivo se il termine è passato, ma la risposta del backend resta l'unica autorità: se l'utente ha la pagina aperta da un'ora, il termine può essere scaduto nel frattempo.
 - I film hanno un **rating d'età** (es. "T", "14+", "18+") da mostrare in modo visibile. Non è richiesta alcuna verifica in fase di prenotazione: il controllo resta umano, all'ingresso in sala.
 - **Due clienti non devono mai poter prenotare lo stesso posto.** Il backend lo garantisce con un vincolo a database e risponde `409` al secondo arrivato. Lato interfaccia il caso è tutt'altro che teorico: la mappa posti che l'utente sta guardando può essere vecchia di trenta secondi, e in quei trenta secondi qualcun altro può aver preso il posto che sta per selezionare. Come si comporta l'interfaccia in quel momento è uno dei punti più importanti di questo progetto.
@@ -65,4 +65,4 @@ Il gestore aveva valutato i portali di prenotazione già pronti sul mercato, ma 
 
 ---
 
-*Questo documento descrive il contesto di business fittizio usato come riferimento per le user story del progetto didattico. In caso di dubbi su un requisito non specificato, è legittimo e incoraggiato fare ipotesi ragionevoli partendo da questo contesto e documentarle nella PR, esattamente come si farebbe con un cliente reale che non ha pensato a tutti i casi limite.*
+_Questo documento descrive il contesto di business fittizio usato come riferimento per le user story del progetto didattico. In caso di dubbi su un requisito non specificato, è legittimo e incoraggiato fare ipotesi ragionevoli partendo da questo contesto e documentarle nella PR, esattamente come si farebbe con un cliente reale che non ha pensato a tutti i casi limite._

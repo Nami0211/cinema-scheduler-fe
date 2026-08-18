@@ -12,7 +12,6 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 /**
  *
  * @export
@@ -38,8 +37,7 @@ export interface LoginInput {
  */
 export function instanceOfLoginInput(value: object): value is LoginInput {
   if (!('email' in value) || value['email'] === undefined) return false;
-  if (!('password' in value) || value['password'] === undefined) return false;
-  return true;
+  return !(!('password' in value) || value['password'] === undefined);
 }
 
 export function LoginInputFromJSON(json: any): LoginInput {

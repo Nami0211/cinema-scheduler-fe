@@ -19,6 +19,7 @@ Formato: `<tipo>/<numero-issue>-<breve-descrizione>`
 Tipi ammessi: `feature`, `fix`, `refactor`, `test`, `chore`, `docs`
 
 Esempi:
+
 - `feature/8-filtri-palinsesto-url`
 - `fix/13-rollback-optimistic-update`
 - `refactor/15-memoizzazione-seatmap`
@@ -36,6 +37,7 @@ Formato [Conventional Commits](https://www.conventionalcommits.org/):
 Tipi: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `ci`, `style`, `perf`
 
 Esempi:
+
 - `feat(palinsesto): sposta i filtri nella query string`
 - `fix(prenotazioni): annulla l'optimistic update quando il backend risponde 409`
 - `perf(seatmap): memoizza il singolo posto per evitare 180 render a ogni selezione`

@@ -12,14 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { Utente } from './Utente';
-import {
-  UtenteFromJSON,
-  UtenteFromJSONTyped,
-  UtenteToJSON,
-  UtenteToJSONTyped,
-} from './Utente';
+import { UtenteFromJSON, UtenteToJSON } from './Utente';
 
 /**
  *
@@ -46,8 +40,7 @@ export interface AuthResponse {
  */
 export function instanceOfAuthResponse(value: object): value is AuthResponse {
   if (!('token' in value) || value['token'] === undefined) return false;
-  if (!('utente' in value) || value['utente'] === undefined) return false;
-  return true;
+  return !(!('utente' in value) || value['utente'] === undefined);
 }
 
 export function AuthResponseFromJSON(json: any): AuthResponse {

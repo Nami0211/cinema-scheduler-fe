@@ -12,14 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { Film } from './Film';
-import {
-  FilmFromJSON,
-  FilmFromJSONTyped,
-  FilmToJSON,
-  FilmToJSONTyped,
-} from './Film';
+import { FilmFromJSON, FilmToJSON } from './Film';
 
 /**
  *
@@ -60,8 +54,7 @@ export function instanceOfFilmsGet200Response(
   value: object
 ): value is FilmsGet200Response {
   if (!('items' in value) || value['items'] === undefined) return false;
-  if (!('total' in value) || value['total'] === undefined) return false;
-  return true;
+  return !(!('total' in value) || value['total'] === undefined);
 }
 
 export function FilmsGet200ResponseFromJSON(json: any): FilmsGet200Response {

@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
-import { Button } from '../ui/atoms/Button/Button';
+import { Button } from 'ui/atoms/Button/Button';
 import styles from './error.module.css';
 export default function Error({
   error,

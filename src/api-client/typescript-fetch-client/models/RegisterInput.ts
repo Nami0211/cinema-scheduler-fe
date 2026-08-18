@@ -12,7 +12,6 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 /**
  *
  * @export
@@ -52,8 +51,7 @@ export function instanceOfRegisterInput(value: object): value is RegisterInput {
   if (!('email' in value) || value['email'] === undefined) return false;
   if (!('password' in value) || value['password'] === undefined) return false;
   if (!('nome' in value) || value['nome'] === undefined) return false;
-  if (!('cognome' in value) || value['cognome'] === undefined) return false;
-  return true;
+  return !(!('cognome' in value) || value['cognome'] === undefined);
 }
 
 export function RegisterInputFromJSON(json: any): RegisterInput {

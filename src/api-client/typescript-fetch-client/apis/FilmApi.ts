@@ -13,21 +13,11 @@
  */
 
 import * as runtime from '../runtime';
-import type {
-  ErrorResponse,
-  Film,
-  FilmInput,
-  FilmsGet200Response,
-} from '../models/index';
+import type { Film, FilmInput, FilmsGet200Response } from '../models/index';
 import {
-  ErrorResponseFromJSON,
-  ErrorResponseToJSON,
   FilmFromJSON,
-  FilmToJSON,
-  FilmInputFromJSON,
   FilmInputToJSON,
   FilmsGet200ResponseFromJSON,
-  FilmsGet200ResponseToJSON,
 } from '../models/index';
 
 export interface FilmsGetRequest {

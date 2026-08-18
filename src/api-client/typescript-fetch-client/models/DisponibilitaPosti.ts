@@ -12,14 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { Posto } from './Posto';
-import {
-  PostoFromJSON,
-  PostoFromJSONTyped,
-  PostoToJSON,
-  PostoToJSONTyped,
-} from './Posto';
+import { PostoFromJSON, PostoToJSON } from './Posto';
 
 /**
  *
@@ -63,9 +57,7 @@ export function instanceOfDisponibilitaPosti(
     return false;
   if (!('righe' in value) || value['righe'] === undefined) return false;
   if (!('colonne' in value) || value['colonne'] === undefined) return false;
-  if (!('postiOccupati' in value) || value['postiOccupati'] === undefined)
-    return false;
-  return true;
+  return !(!('postiOccupati' in value) || value['postiOccupati'] === undefined);
 }
 
 export function DisponibilitaPostiFromJSON(json: any): DisponibilitaPosti {

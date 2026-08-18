@@ -12,7 +12,6 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 /**
  *
  * @export
@@ -66,8 +65,7 @@ export function instanceOfSala(value: object): value is Sala {
   if (!('nome' in value) || value['nome'] === undefined) return false;
   if (!('righe' in value) || value['righe'] === undefined) return false;
   if (!('colonne' in value) || value['colonne'] === undefined) return false;
-  if (!('capienza' in value) || value['capienza'] === undefined) return false;
-  return true;
+  return !(!('capienza' in value) || value['capienza'] === undefined);
 }
 
 export function SalaFromJSON(json: any): Sala {

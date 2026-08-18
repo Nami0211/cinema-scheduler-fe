@@ -12,21 +12,10 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { Genere } from './Genere';
-import {
-  GenereFromJSON,
-  GenereFromJSONTyped,
-  GenereToJSON,
-  GenereToJSONTyped,
-} from './Genere';
+import { GenereFromJSON, GenereToJSON } from './Genere';
 import type { RatingEta } from './RatingEta';
-import {
-  RatingEtaFromJSON,
-  RatingEtaFromJSONTyped,
-  RatingEtaToJSON,
-  RatingEtaToJSONTyped,
-} from './RatingEta';
+import { RatingEtaFromJSON, RatingEtaToJSON } from './RatingEta';
 
 /**
  *
@@ -68,8 +57,7 @@ export function instanceOfFilmInput(value: object): value is FilmInput {
   if (!('durataMinuti' in value) || value['durataMinuti'] === undefined)
     return false;
   if (!('genere' in value) || value['genere'] === undefined) return false;
-  if (!('ratingEta' in value) || value['ratingEta'] === undefined) return false;
-  return true;
+  return !(!('ratingEta' in value) || value['ratingEta'] === undefined);
 }
 
 export function FilmInputFromJSON(json: any): FilmInput {

@@ -13,20 +13,10 @@
  */
 
 import * as runtime from '../runtime';
-import type {
-  AuthResponse,
-  ErrorResponse,
-  LoginInput,
-  RegisterInput,
-} from '../models/index';
+import type { AuthResponse, LoginInput, RegisterInput } from '../models/index';
 import {
   AuthResponseFromJSON,
-  AuthResponseToJSON,
-  ErrorResponseFromJSON,
-  ErrorResponseToJSON,
-  LoginInputFromJSON,
   LoginInputToJSON,
-  RegisterInputFromJSON,
   RegisterInputToJSON,
 } from '../models/index';
 

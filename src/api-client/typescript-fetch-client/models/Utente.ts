@@ -12,14 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { Ruolo } from './Ruolo';
-import {
-  RuoloFromJSON,
-  RuoloFromJSONTyped,
-  RuoloToJSON,
-  RuoloToJSONTyped,
-} from './Ruolo';
+import { RuoloFromJSON, RuoloToJSON } from './Ruolo';
 
 /**
  *
@@ -67,8 +61,7 @@ export function instanceOfUtente(value: object): value is Utente {
   if (!('email' in value) || value['email'] === undefined) return false;
   if (!('nome' in value) || value['nome'] === undefined) return false;
   if (!('cognome' in value) || value['cognome'] === undefined) return false;
-  if (!('ruolo' in value) || value['ruolo'] === undefined) return false;
-  return true;
+  return !(!('ruolo' in value) || value['ruolo'] === undefined);
 }
 
 export function UtenteFromJSON(json: any): Utente {
