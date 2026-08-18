@@ -19,7 +19,8 @@ next-env.d.ts
 # client generato da OpenAPI (issue #4)
 # Se decidi di committare l'output generato invece di rigenerarlo, rimuovi
 # questa riga e spiega la scelta nella PR.
-/src/services/generated
+/src/api-client
+
 
 # ambiente
 .env
