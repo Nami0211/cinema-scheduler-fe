@@ -12,13 +12,10 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { ErrorResponseError } from './ErrorResponseError';
 import {
   ErrorResponseErrorFromJSON,
-  ErrorResponseErrorFromJSONTyped,
   ErrorResponseErrorToJSON,
-  ErrorResponseErrorToJSONTyped,
 } from './ErrorResponseError';
 
 /**
@@ -39,8 +36,7 @@ export interface ErrorResponse {
  * Check if a given object implements the ErrorResponse interface.
  */
 export function instanceOfErrorResponse(value: object): value is ErrorResponse {
-  if (!('error' in value) || value['error'] === undefined) return false;
-  return true;
+  return !(!('error' in value) || value['error'] === undefined);
 }
 
 export function ErrorResponseFromJSON(json: any): ErrorResponse {

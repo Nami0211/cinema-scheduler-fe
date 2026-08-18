@@ -7,7 +7,6 @@ import { getMessages } from 'next-intl/server';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import StoreProvider from 'store/Provider';
-import { MSWProvider } from 'components/MSWProvider';
 import styles from './layout.module.css';
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -41,13 +40,11 @@ export default async function RootLayout({
         <StoreProvider>
           <NextIntlClientProvider messages={messages}>
             <ThemeProvider>
-              <MSWProvider>
-                <div className={styles.container}>
-                  <Header />
-                  <main className={styles.main}>{children}</main>
-                  <Footer />
-                </div>
-              </MSWProvider>
+              <div className={styles.container}>
+                <Header />
+                <main className={styles.main}>{children}</main>
+                <Footer />
+              </div>
             </ThemeProvider>
           </NextIntlClientProvider>
         </StoreProvider>

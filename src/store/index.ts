@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { filmApi } from './api/filmApi';
+import { filmApi } from 'services/api/filmApi';
 
 export const makeStore = () => {
   return configureStore({
