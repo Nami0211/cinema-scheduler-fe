@@ -1,20 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { filmApi } from './api/filmApi';
-import { proiezioniApi } from './api/proiezioniApi';
-import { saleApi } from './api/saleApi';
+import { filmApi } from 'services/api/filmApi';
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       [filmApi.reducerPath]: filmApi.reducer,
-      [proiezioniApi.reducerPath]: proiezioniApi.reducer,
-      [saleApi.reducerPath]: saleApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware()
-        .concat(filmApi.middleware)
-        .concat(proiezioniApi.middleware)
-        .concat(saleApi.middleware),
+      getDefaultMiddleware().concat(filmApi.middleware),
   });
 };
 

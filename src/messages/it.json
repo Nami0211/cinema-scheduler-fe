@@ -5,27 +5,15 @@
   },
   "errors": {
     "unknown": "Errore sconosciuto",
-    "network": "Errore di rete"
+    "network": "Errore di rete",
+    "timeout": "Richiesta scaduta",
+    "parsing": "Risposta del server non valida"
   },
   "Header": {
-    "logoText": "Cinema Aurora",
     "schedule": "Palinsesto",
     "myBookings": "Le mie prenotazioni",
     "adminArea": "Area Admin",
-    "menuToggle": "Apri menu",
-    "mainNavAria": "Navigazione principale",
-    "themeToggle": "Cambia tema",
-    "themeDark": "Passa a tema scuro",
-    "themeLight": "Passa a tema chiaro",
-    "themeSystem": "Usa tema di sistema"
-  },
-  "Footer": {
-    "description": "Cinema Aurora",
-    "tagline": "La tua serata inizia qui.",
-    "copyright": "Tutti i diritti riservati.",
-    "linkSchedule": "Palinsesto",
-    "linkBookings": "Prenotazioni",
-    "linkAdmin": "Area Admin"
+    "menuToggle": "Apri menu"
   },
   "Error": {
     "title": "Qualcosa è andato storto!",
@@ -40,23 +28,14 @@
     "welcome": "Benvenuto",
     "description": "Seleziona un'opzione dal menu per iniziare."
   },
-  "Palinsesto": {
-    "title": "Palinsesto",
-    "subtitle": "Scopri gli spettacoli in programmazione",
-    "today": "Oggi",
-    "noShowsTitle": "Nessuno spettacolo",
-    "noShowsText": "Non ci sono spettacoli in programmazione per il {data}.",
-    "noShowsHint": "Prova a selezionare un altro giorno.",
-    "errorTitle": "Impossibile caricare il palinsesto",
-    "errorMessage": "Si è verificato un errore durante il caricamento degli spettacoli.",
-    "retry": "Riprova",
-    "duration": "{minutes} min",
-    "rating": "{rating}",
-    "ratingAriaLabel": "Rating età: {rating}",
-    "ongoing": "In corso",
-    "ongoingAriaLabel": "Spettacolo in corso",
-    "showtimeUntil": "fino alle {time}",
-    "daySelectorAria": "Seleziona giorno",
-    "loadingAria": "Caricamento palinsesto..."
+  "Footer": {
+    "description": "Cinema Schedule"
+  },
+  "TestRedux": {
+    "title": "Test Redux Toolkit & RTK Query",
+    "description": "Questa pagina monta due componenti identici che effettuano la stessa query RTK Query (useGetFilmsQuery). Verifica nel tab Network dei DevTools che venga effettuata una sola chiamata HTTP a /films.",
+    "filmListTitle": "Lista Film (Istanza {instanceId})",
+    "loading": "Caricamento film (Istanza {instanceId})...",
+    "error": "Errore nel caricamento film (Istanza {instanceId}): {message}"
   }
 }

@@ -1,18 +1,29 @@
 'use client';
 
-import { useGetFilmsQuery } from 'store/api/filmApi';
+import { useTranslations } from 'next-intl';
+import { useGetFilmsQuery } from 'services/api/filmApi';
+import type { AppError } from 'services/baseQuery';
 import styles from './page.module.css';
 
 function FilmList({ instanceId }: { instanceId: string }) {
+  const t = useTranslations('TestRedux');
+  const tErr = useTranslations('errors');
   const { data: films, error, isLoading } = useGetFilmsQuery();
 
-  if (isLoading) return <div>Caricamento film (Istanza {instanceId})...</div>;
-  if (error)
-    return <div>Errore nel caricamento film: {JSON.stringify(error)}</div>;
+  if (isLoading) return <div>{t('loading', { instanceId })}</div>;
+  if (error) {
+    const appError = error as AppError;
+    const errKey = appError?.message?.replace(/^errors\./, '') ?? 'unknown';
+    const errorMessage = tErr.has(errKey as Parameters<typeof tErr>[0])
+      ? tErr(errKey as Parameters<typeof tErr>[0])
+      : appError.message;
+
+    return <div>{t('error', { instanceId, message: errorMessage })}</div>;
+  }
 
   return (
     <div className={styles.filmCard}>
-      <h2>Lista Film (Istanza {instanceId})</h2>
+      <h2>{t('filmListTitle', { instanceId })}</h2>
       <ul>
         {films?.map((film) => (
           <li key={film.id}>
@@ -25,9 +36,11 @@ function FilmList({ instanceId }: { instanceId: string }) {
 }
 
 export default function TestReduxPage() {
+  const t = useTranslations('TestRedux');
+
   return (
     <div className={styles.container}>
-      <h1>Test Redux Toolkit &amp; RTK Query</h1>
+      <h1>{t('title')}</h1>
       <p>
         Questa pagina monta due componenti identici che effettuano la stessa
         query RTK Query (<code>useGetFilmsQuery</code>). Verifica nel tab
