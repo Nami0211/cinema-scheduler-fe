@@ -6,6 +6,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import StoreProvider from 'store/Provider';
 import styles from './layout.module.css';
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -36,15 +37,17 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body>
-        <NextIntlClientProvider messages={messages}>
-          <ThemeProvider>
-            <div className={styles.container}>
-              <Header />
-              <main className={styles.main}>{children}</main>
-              <Footer />
-            </div>
-          </ThemeProvider>
-        </NextIntlClientProvider>
+        <StoreProvider>
+          <NextIntlClientProvider messages={messages}>
+            <ThemeProvider>
+              <div className={styles.container}>
+                <Header />
+                <main className={styles.main}>{children}</main>
+                <Footer />
+              </div>
+            </ThemeProvider>
+          </NextIntlClientProvider>
+        </StoreProvider>
       </body>
     </html>
   );

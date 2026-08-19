@@ -3,6 +3,12 @@
     "loading": "Caricamento in corso...",
     "retry": "Riprova"
   },
+  "errors": {
+    "unknown": "Errore sconosciuto",
+    "network": "Errore di rete",
+    "timeout": "Richiesta scaduta",
+    "parsing": "Risposta del server non valida"
+  },
   "Header": {
     "schedule": "Palinsesto",
     "myBookings": "Le mie prenotazioni",
@@ -24,5 +30,12 @@
   },
   "Footer": {
     "description": "Cinema Schedule"
+  },
+  "TestRedux": {
+    "title": "Test Redux Toolkit & RTK Query",
+    "description": "Questa pagina monta due componenti identici che effettuano la stessa query RTK Query (useGetFilmsQuery). Verifica nel tab Network dei DevTools che venga effettuata una sola chiamata HTTP a /films.",
+    "filmListTitle": "Lista Film (Istanza {instanceId})",
+    "loading": "Caricamento film (Istanza {instanceId})...",
+    "error": "Errore nel caricamento film (Istanza {instanceId}): {message}"
   }
 }

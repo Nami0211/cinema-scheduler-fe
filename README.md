@@ -18,23 +18,23 @@ Se le issue non sono ancora presenti nel tuo fork, vedi [Bootstrap delle issue](
 
 ## Stack tecnologico
 
-| Ambito | Tecnologia |
-|---|---|
-| Framework | Next.js 14 (App Router) |
-| Linguaggio | TypeScript (strict mode) |
-| Stato applicativo | Redux Toolkit |
-| Data fetching e cache | RTK Query |
-| Client API | Generato da OpenAPI (`@openapitools/openapi-generator-cli`) |
-| Stile | CSS Modules + custom properties |
-| Tema | `next-themes` (chiaro/scuro) |
-| Internazionalizzazione | `next-intl` (locale `it`) |
-| Autenticazione | `next-auth` (Credentials sul backend) |
-| Tabelle | `@tanstack/react-table` |
-| Virtualizzazione | `@tanstack/react-virtual` |
-| Grafici | `recharts` |
-| Mock API | MSW + `factory.ts` + `@faker-js/faker` |
-| Test | Jest + React Testing Library + `jest-axe` |
-| CI | GitHub Actions |
+| Ambito                 | Tecnologia                                                  |
+| ---------------------- | ----------------------------------------------------------- |
+| Framework              | Next.js 14 (App Router)                                     |
+| Linguaggio             | TypeScript (strict mode)                                    |
+| Stato applicativo      | Redux Toolkit                                               |
+| Data fetching e cache  | RTK Query                                                   |
+| Client API             | Generato da OpenAPI (`@openapitools/openapi-generator-cli`) |
+| Stile                  | CSS Modules + custom properties                             |
+| Tema                   | `next-themes` (chiaro/scuro)                                |
+| Internazionalizzazione | `next-intl` (locale `it`)                                   |
+| Autenticazione         | `next-auth` (Credentials sul backend)                       |
+| Tabelle                | `@tanstack/react-table`                                     |
+| Virtualizzazione       | `@tanstack/react-virtual`                                   |
+| Grafici                | `recharts`                                                  |
+| Mock API               | MSW + `factory.ts` + `@faker-js/faker`                      |
+| Test                   | Jest + React Testing Library + `jest-axe`                   |
+| CI                     | GitHub Actions                                              |
 
 Le librerie sono quelle in uso sul progetto reale del team: l'obiettivo è che alla fine dell'esercizio tu ti muova in un repository di produzione senza dover imparare lo stack da zero.
 
@@ -74,13 +74,13 @@ L'applicazione parte di default su `http://localhost:3000`. Il backend, se attiv
 
 ## Variabili d'ambiente
 
-| Variabile | Descrizione | Default (sviluppo) |
-|---|---|---|
-| `NEXT_PUBLIC_API_BASE_URL` | Base URL del backend | `http://localhost:3001` |
-| `NEXT_PUBLIC_USE_MOCKS` | Se `true`, le chiamate API sono intercettate da MSW e servite dalle fixture locali | `false` |
-| `OPENAPI_SPEC_URL` | URL da cui `api:generate` scarica lo spec OpenAPI | `http://localhost:3001/openapi.json` |
-| `NEXTAUTH_URL` | URL pubblico dell'applicazione, richiesto da next-auth | `http://localhost:3000` |
-| `NEXTAUTH_SECRET` | Segreto per la firma dei cookie di sessione | — (obbligatorio, nessun default) |
+| Variabile                  | Descrizione                                                                        | Default (sviluppo)                   |
+| -------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------ |
+| `NEXT_PUBLIC_API_BASE_URL` | Base URL del backend                                                               | `http://localhost:3001`              |
+| `NEXT_PUBLIC_USE_MOCKS`    | Se `true`, le chiamate API sono intercettate da MSW e servite dalle fixture locali | `false`                              |
+| `OPENAPI_SPEC_URL`         | URL da cui `api:generate` scarica lo spec OpenAPI                                  | `http://localhost:3001/openapi.json` |
+| `NEXTAUTH_URL`             | URL pubblico dell'applicazione, richiesto da next-auth                             | `http://localhost:3000`              |
+| `NEXTAUTH_SECRET`          | Segreto per la firma dei cookie di sessione                                        | — (obbligatorio, nessun default)     |
 
 Le variabili con prefisso `NEXT_PUBLIC_` finiscono nel bundle inviato al browser: **non metterci mai un segreto**.
 
@@ -88,17 +88,17 @@ Le variabili con prefisso `NEXT_PUBLIC_` finiscono nel bundle inviato al browser
 
 Da implementare progressivamente nelle issue indicate.
 
-| Comando | Descrizione | Issue |
-|---|---|---|
-| `npm run dev` | Avvia l'applicazione in modalità sviluppo | #1 |
-| `npm run build` | Build di produzione | #1 |
-| `npm start` | Avvia la build di produzione | #1 |
-| `npm run lint` / `lint:fix` | Esegue ESLint | #1 |
-| `npm run compile` | Verifica i tipi senza emettere output (`tsc --noEmit`) | #1 |
-| `npm run prettier` | Formatta il codice | #1 |
-| `npm run api:generate` | Genera il client tipizzato dallo spec OpenAPI del backend | #4 |
-| `npm run unit` | Esegue gli unit test | #17 |
-| `npm run unit:coverage` | Esegue gli unit test con report di coverage | #17 |
+| Comando                     | Descrizione                                               | Issue |
+| --------------------------- | --------------------------------------------------------- | ----- |
+| `npm run dev`               | Avvia l'applicazione in modalità sviluppo                 | #1    |
+| `npm run build`             | Build di produzione                                       | #1    |
+| `npm start`                 | Avvia la build di produzione                              | #1    |
+| `npm run lint` / `lint:fix` | Esegue ESLint                                             | #1    |
+| `npm run compile`           | Verifica i tipi senza emettere output (`tsc --noEmit`)    | #1    |
+| `npm run prettier`          | Formatta il codice                                        | #1    |
+| `npm run api:generate`      | Genera il client tipizzato dallo spec OpenAPI del backend | #4    |
+| `npm run unit`              | Esegue gli unit test                                      | #17   |
+| `npm run unit:coverage`     | Esegue gli unit test con report di coverage               | #17   |
 
 ## Struttura del progetto
 
@@ -122,6 +122,22 @@ mocks/
 ```
 
 Regola generale sulle dipendenze: `app → components → ui`, e i componenti consumano i dati **solo** attraverso il layer `services` (RTK Query). Un componente non chiama mai `fetch` direttamente.
+
+## Gestione dello Stato e Cache (Redux & RTK Query)
+
+Il progetto utilizza Redux Toolkit per lo stato globale e RTK Query per il fetching e il caching dei dati dal server.
+La distinzione tra i due è la decisione architetturale chiave:
+
+- **RTK Query (Stato Server):** Se il dato ha un'origine remota ed è ricaricabile, sta in RTK Query. Lo stato server (es. elenco film, dettagli di una sala) **non** viene mai copiato in uno slice Redux. Vive solo nella cache.
+- **Redux Slice / Stato Locale (Stato UI):** Se il dato esiste solo nel browser (es. filtro selezionato, modale aperta, riga espansa), sta in uno slice Redux. O, meglio ancora, nello stato locale del componente (`useState`), se nessun altro componente ha bisogno di leggerlo.
+
+### Convenzione dei Tag in RTK Query
+
+RTK Query utilizza un sistema di tag per invalidare la cache automaticamente quando i dati cambiano (es. dopo una mutation). Nel progetto adottiamo la seguente convenzione per il campo `providesTags`:
+
+- **Struttura del tag:** `{ type: 'ModelName', id: 'ID_VALUE' | 'LIST' }` (es. `{ type: 'Film', id: 'LIST' }` o `{ type: 'Film', id: 123 }`).
+- **Chi li fornisce (providesTags):** Le query (es. `getFilms`, `getFilmById`) forniscono i tag associati ai dati che restituiscono. Una query per una lista fornisce sia i tag per ogni singolo elemento sia un tag generico con `id: 'LIST'`.
+- **Chi li invalida (invalidatesTags):** Le mutation (es. `createFilm`, `updateFilm`, `deleteFilm`) invalidano i tag pertinenti. Una creazione invalida la `'LIST'`, un aggiornamento o una cancellazione invalida il tag con l'ID specifico (e opzionalmente la `'LIST'`).
 
 ## Lavorare senza backend
 
