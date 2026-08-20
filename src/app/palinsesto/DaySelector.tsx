@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter, usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import styles from './palinsesto.module.css';
 import cx from 'classnames';
@@ -8,6 +7,7 @@ import cx from 'classnames';
 interface DaySelectorProps {
   giorniDisponibili: string[];
   dataSelezionata: string;
+  onSelectDay: (giorno: string) => void;
 }
 
 const GIORNI_SETTIMANA = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
@@ -37,14 +37,12 @@ function formatLabel(dateString: string): { giorno: string; data: string } {
 export default function DaySelector({
   giorniDisponibili,
   dataSelezionata,
+  onSelectDay,
 }: DaySelectorProps) {
   const t = useTranslations('Palinsesto');
-  const router = useRouter();
-  const pathname = usePathname();
 
   function handleDayClick(giorno: string) {
-    const params = new URLSearchParams({ data: giorno });
-    router.push(`${pathname}?${params.toString()}`);
+    onSelectDay(giorno);
   }
 
   return (

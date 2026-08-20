@@ -21,6 +21,15 @@ export const handlers = [
     });
   }),
 
+  http.get('*/api/sale', () => {
+    return HttpResponse.json({
+      items: sale,
+      total: sale.length,
+      page: 1,
+      pageSize: sale.length,
+    });
+  }),
+
   http.get('*/api/films/:id', ({ params }) => {
     const id = Number(params.id);
     const film = films.find((f: { id: number }) => f.id === id);

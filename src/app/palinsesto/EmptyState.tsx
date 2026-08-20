@@ -1,12 +1,20 @@
 import { useTranslations } from 'next-intl';
+import { Button } from 'ui/atoms/Button/Button';
 import styles from './palinsesto.module.css';
 
 interface EmptyStateProps {
   data: string;
+  hasActiveFilters?: boolean;
+  onResetFilters?: () => void;
 }
 
-export default function EmptyState({ data }: EmptyStateProps) {
+export default function EmptyState({
+  data,
+  hasActiveFilters = false,
+  onResetFilters,
+}: EmptyStateProps) {
   const t = useTranslations('Palinsesto');
+
   return (
     <div className={styles.emptyState} role="status" aria-live="polite">
       <svg
@@ -75,9 +83,27 @@ export default function EmptyState({ data }: EmptyStateProps) {
           zzz
         </text>
       </svg>
-      <h3 className={styles.emptyStateTitle}>{t('noShowsTitle')}</h3>
-      <p className={styles.emptyStateText}>{t('noShowsText', { data })}</p>
-      <p className={styles.emptyStateHint}>{t('noShowsHint')}</p>
+      {hasActiveFilters ? (
+        <>
+          <h3 className={styles.emptyStateTitle}>
+            {t('noShowsFilteredTitle')}
+          </h3>
+          <p className={styles.emptyStateText}>{t('noShowsFilteredText')}</p>
+          {onResetFilters && (
+            <div className={styles.emptyStateAction}>
+              <Button variant="secondary" onClick={onResetFilters}>
+                {t('resetFilters')}
+              </Button>
+            </div>
+          )}
+        </>
+      ) : (
+        <>
+          <h3 className={styles.emptyStateTitle}>{t('noShowsTitle')}</h3>
+          <p className={styles.emptyStateText}>{t('noShowsText', { data })}</p>
+          <p className={styles.emptyStateHint}>{t('noShowsHint')}</p>
+        </>
+      )}
     </div>
   );
 }

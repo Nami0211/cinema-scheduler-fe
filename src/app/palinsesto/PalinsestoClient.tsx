@@ -4,7 +4,13 @@ import { useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useGetProiezioniByDataQuery } from 'services/api/proiezioniApi';
+import { useGetFilmsQuery } from 'services/api/filmApi';
+import { useGetSaleQuery } from 'services/api/saleApi';
 import type { ProiezioneArricchita } from 'services/api/proiezioniApi';
+import { usePalinsestoFilters } from 'utils/hooks/usePalinsestoFilters';
+import { getDataValida } from 'utils/date';
+import { Select } from 'ui/atoms/Select/Select';
+import { Button } from 'ui/atoms/Button/Button';
 import DaySelector from './DaySelector';
 import FilmCard from './FilmCard';
 import PalinsestoSkeleton from './PalinsestoSkeleton';
@@ -44,27 +50,97 @@ function groupByFilm(proiezioni: ProiezioneArricchita[]): Array<{
 }
 
 export default function PalinsestoClient({
-  dataIniziale,
   giorniDisponibili,
 }: PalinsestoClientProps) {
   const t = useTranslations('Palinsesto');
+
+  // Recupera elenchi di film e sale via API (se presenti nel BE)
+  const { data: films } = useGetFilmsQuery();
+  const { data: sale } = useGetSaleQuery();
+
+  // Data correntemente richiesta nell'URL
   const searchParams = useSearchParams();
-  const dataFromUrl = searchParams.get('data');
+  const rawData = searchParams.get('data') ?? undefined;
+  const currentData = useMemo(() => {
+    return getDataValida(rawData, giorniDisponibili);
+  }, [rawData, giorniDisponibili]);
 
-  const dataSelezionata =
-    dataFromUrl && giorniDisponibili.includes(dataFromUrl)
-      ? dataFromUrl
-      : dataIniziale;
-
+  // Query proiezioni per la data (supportata da backend e mock)
   const {
     data: proiezioni,
     isLoading,
     isError,
     error,
     refetch,
-  } = useGetProiezioniByDataQuery(dataSelezionata);
+  } = useGetProiezioniByDataQuery(currentData);
 
-  const gruppiFilm = useMemo(() => groupByFilm(proiezioni ?? []), [proiezioni]);
+  // Calcola le opzioni di sale e film disponibili:
+  // Se la chiamata /sale o /films fallisce o restituisce 404 (es. endpoint BE non ancora pronto),
+  // ricava l'elenco unico dalle proiezioni arricchite della giornata!
+  const availableSale = useMemo(() => {
+    if (sale && sale.length > 0) return sale;
+    if (!proiezioni) return [];
+    const map = new Map<string | number, ProiezioneArricchita['sala']>();
+    for (const p of proiezioni) {
+      if (p.sala && !map.has(p.sala.id)) {
+        map.set(p.sala.id, p.sala);
+      }
+    }
+    return Array.from(map.values()).sort((a, b) =>
+      a.nome.localeCompare(b.nome, 'it')
+    );
+  }, [sale, proiezioni]);
+
+  const availableFilms = useMemo(() => {
+    if (films && films.length > 0) return films;
+    if (!proiezioni) return [];
+    const map = new Map<string | number, ProiezioneArricchita['film']>();
+    for (const p of proiezioni) {
+      if (p.film && !map.has(p.film.id)) {
+        map.set(p.film.id, p.film);
+      }
+    }
+    return Array.from(map.values()).sort((a, b) =>
+      a.titolo.localeCompare(b.titolo, 'it')
+    );
+  }, [films, proiezioni]);
+
+  // Hook per i filtri agganciato alla query string dell'URL
+  const {
+    filters,
+    setData,
+    setFilmId,
+    setSalaId,
+    resetFilters,
+    hasActiveFilters,
+  } = usePalinsestoFilters(giorniDisponibili, availableFilms, availableSale);
+
+  // Applica filtri in-memory per filmId e salaId
+  const proiezioniFiltrate = useMemo(() => {
+    if (!proiezioni) return [];
+    return proiezioni.filter((p) => {
+      if (
+        filters.filmId !== undefined &&
+        String(p.filmId) !== String(filters.filmId)
+      ) {
+        return false;
+      }
+      if (
+        filters.salaId !== undefined &&
+        String(p.salaId) !== String(filters.salaId)
+      ) {
+        return false;
+      }
+      return true;
+    });
+  }, [proiezioni, filters.filmId, filters.salaId]);
+
+  const gruppiFilm = useMemo(
+    () => groupByFilm(proiezioniFiltrate),
+    [proiezioniFiltrate]
+  );
+
+  const totalSpettacoli = proiezioniFiltrate.length;
 
   const errorMessage =
     isError && error ? (error as AppError).message : undefined;
@@ -80,8 +156,62 @@ export default function PalinsestoClient({
       {/* Selettore giorno */}
       <DaySelector
         giorniDisponibili={giorniDisponibili}
-        dataSelezionata={dataSelezionata}
+        dataSelezionata={filters.data}
+        onSelectDay={setData}
       />
+
+      {/* Barra Filtri (Film, Sala, Reset) */}
+      <div className={styles.filterSection}>
+        <div className={styles.filtersBar}>
+          <div className={styles.filterGroup}>
+            <Select
+              id="filter-film"
+              label={t('filterFilmLabel')}
+              value={filters.filmId ?? ''}
+              onChange={(e) => setFilmId(e.target.value || undefined)}
+            >
+              <option value="">{t('filterFilmAll')}</option>
+              {availableFilms.map((film) => (
+                <option key={film.id} value={film.id}>
+                  {film.titolo}
+                </option>
+              ))}
+            </Select>
+          </div>
+
+          <div className={styles.filterGroup}>
+            <Select
+              id="filter-sala"
+              label={t('filterSalaLabel')}
+              value={filters.salaId ?? ''}
+              onChange={(e) => setSalaId(e.target.value || undefined)}
+            >
+              <option value="">{t('filterSalaAll')}</option>
+              {availableSale.map((sala) => (
+                <option key={sala.id} value={sala.id}>
+                  {sala.nome}
+                </option>
+              ))}
+            </Select>
+          </div>
+
+          {hasActiveFilters && (
+            <div className={styles.filterActions}>
+              <Button variant="ghost" onClick={resetFilters}>
+                {t('resetFilters')}
+              </Button>
+            </div>
+          )}
+        </div>
+
+        {!isLoading && !isError && (
+          <div className={styles.resultsHeader}>
+            <span className={styles.resultsCount}>
+              {t('resultsCount', { count: totalSpettacoli })}
+            </span>
+          </div>
+        )}
+      </div>
 
       {/* Contenuto principale */}
       {isLoading ? (
@@ -89,7 +219,11 @@ export default function PalinsestoClient({
       ) : isError ? (
         <ErrorState onRetry={refetch} message={errorMessage} />
       ) : gruppiFilm.length === 0 ? (
-        <EmptyState data={dataSelezionata} />
+        <EmptyState
+          data={filters.data}
+          hasActiveFilters={hasActiveFilters}
+          onResetFilters={resetFilters}
+        />
       ) : (
         <div className={styles.filmGrid}>
           {gruppiFilm.map(({ film, proiezioni: prs }) => (

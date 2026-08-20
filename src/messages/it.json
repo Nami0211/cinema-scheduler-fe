@@ -43,7 +43,15 @@
     "retry": "Riprova",
     "showtimeUntil": "fino alle {time}",
     "ongoing": "In corso",
-    "ongoingAriaLabel": "Spettacolo in corso"
+    "ongoingAriaLabel": "Spettacolo in corso",
+    "filterFilmAll": "Tutti i film",
+    "filterSalaAll": "Tutte le sale",
+    "filterFilmLabel": "Film",
+    "filterSalaLabel": "Sala",
+    "resetFilters": "Azzera filtri",
+    "resultsCount": "{count, plural, =0 {Nessuno spettacolo} =1 {1 spettacolo} other {# spettacoli}}",
+    "noShowsFilteredTitle": "Nessun risultato con i filtri selezionati",
+    "noShowsFilteredText": "Non ci sono proiezioni che soddisfano i filtri impostati."
   },
   "Error": {
     "title": "Qualcosa è andato storto!",

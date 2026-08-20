@@ -4,7 +4,7 @@ import PalinsestoClient from './PalinsestoClient';
 import { getGiorniSettimanaCorrente, getDataValida } from 'utils/date';
 
 interface PalinsestoPageProps {
-  searchParams: Promise<{ data?: string }>;
+  searchParams: Promise<{ data?: string; filmId?: string; salaId?: string }>;
 }
 
 /**
