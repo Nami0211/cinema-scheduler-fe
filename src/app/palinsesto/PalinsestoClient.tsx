@@ -3,15 +3,15 @@
 import { useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useGetProiezioniByDataQuery } from 'store/api/proiezioniApi';
-import type { ProiezioneArricchita } from 'store/api/proiezioniApi';
+import { useGetProiezioniByDataQuery } from 'services/api/proiezioniApi';
+import type { ProiezioneArricchita } from 'services/api/proiezioniApi';
 import DaySelector from './DaySelector';
 import FilmCard from './FilmCard';
 import PalinsestoSkeleton from './PalinsestoSkeleton';
 import EmptyState from './EmptyState';
 import ErrorState from './ErrorState';
 import styles from './palinsesto.module.css';
-import type { CustomError } from 'store/baseQuery';
+import type { AppError } from 'services/baseQuery';
 
 interface PalinsestoClientProps {
   dataIniziale: string;
@@ -27,7 +27,7 @@ function groupByFilm(proiezioni: ProiezioneArricchita[]): Array<{
   proiezioni: ProiezioneArricchita[];
 }> {
   const map = new Map<
-    number,
+    string | number,
     { film: ProiezioneArricchita['film']; proiezioni: ProiezioneArricchita[] }
   >();
 
@@ -67,7 +67,7 @@ export default function PalinsestoClient({
   const gruppiFilm = useMemo(() => groupByFilm(proiezioni ?? []), [proiezioni]);
 
   const errorMessage =
-    isError && error ? (error as CustomError).message : undefined;
+    isError && error ? (error as AppError).message : undefined;
 
   return (
     <div className={styles.page}>

@@ -4,10 +4,15 @@ import type {
   FetchArgs,
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
-import {
-  instanceOfErrorResponseError,
-  type ErrorResponseError,
-} from 'api-client/typescript-fetch-client';
+export interface ErrorResponseError {
+  code?: string;
+  message: string;
+  details?: unknown;
+}
+
+function instanceOfErrorResponseError(obj: unknown): obj is ErrorResponseError {
+  return typeof obj === 'object' && obj !== null && 'message' in obj && true;
+}
 
 /**
  * Forma unica dell'errore vista dai componenti.

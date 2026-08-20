@@ -2,8 +2,10 @@ import { useTranslations } from 'next-intl';
 import styles from './palinsesto.module.css';
 import cx from 'classnames';
 import ShowtimeChip from './ShowtimeChip';
-import type { ProiezioneArricchita } from 'store/api/proiezioniApi';
-import type { RatingEta } from 'api-client/typescript-fetch-client';
+import type { ProiezioneArricchita } from 'services/api/proiezioniApi';
+import type { FilmClassificazioneEnum } from 'api-client';
+
+type RatingEta = FilmClassificazioneEnum;
 
 interface FilmCardProps {
   film: ProiezioneArricchita['film'];
@@ -28,7 +30,10 @@ const GENRE_EMOJI: Record<string, string> = {
 
 export default function FilmCard({ film, proiezioni }: FilmCardProps) {
   const t = useTranslations('Palinsesto');
-  const ratingClass = RATING_CSS_CLASS[film.ratingEta] ?? 'ratingT';
+  const rating =
+    film.classificazione ??
+    (film as unknown as { ratingEta: FilmClassificazioneEnum }).ratingEta;
+  const ratingClass = RATING_CSS_CLASS[rating] ?? 'ratingT';
   const emoji = GENRE_EMOJI[film.genere] ?? '🎬';
 
   const ordinate = [...proiezioni].sort(
@@ -58,9 +63,9 @@ export default function FilmCard({ film, proiezioni }: FilmCardProps) {
         <div className={styles.filmRatingWrapper}>
           <span
             className={cx(styles.ratingBadge, styles[ratingClass])}
-            aria-label={t('ratingAriaLabel', { rating: film.ratingEta })}
+            aria-label={t('ratingAriaLabel', { rating })}
           >
-            {t('rating', { rating: film.ratingEta })}
+            {t('rating', { rating })}
           </span>
         </div>
       </div>

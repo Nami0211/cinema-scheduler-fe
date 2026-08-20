@@ -1,9 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from 'services/baseQuery';
-import type {
-  Film,
-  FilmsGet200Response,
-} from 'api-client/typescript-fetch-client';
+import type { Film, FilmsGet200Response } from 'api-client';
 
 export const filmApi = createApi({
   reducerPath: 'filmApi',
@@ -12,8 +9,8 @@ export const filmApi = createApi({
   endpoints: (builder) => ({
     getFilms: builder.query<Film[], void>({
       query: () => '/films',
-      transformResponse: (response: FilmsGet200Response) =>
-        response.items || [],
+      transformResponse: (response: FilmsGet200Response & { items?: Film[] }) =>
+        response.data ?? response.items ?? [],
       providesTags: (result) =>
         result
           ? [

@@ -20,6 +20,7 @@
     ],
     "baseUrl": "./src",
     "paths": {
+      "api-client": ["api-client/index.ts"],
       "api-client/*": ["api-client/*"],
       "app/*": ["app/*"],
       "components/*": ["components/*"],

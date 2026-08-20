@@ -10,10 +10,40 @@
     "parsing": "Risposta del server non valida"
   },
   "Header": {
+    "logoText": "Multiplex Aurora",
+    "mainNavAria": "Navigazione principale",
     "schedule": "Palinsesto",
     "myBookings": "Le mie prenotazioni",
     "adminArea": "Area Admin",
-    "menuToggle": "Apri menu"
+    "menuToggle": "Apri menu",
+    "themeLight": "Attiva tema chiaro",
+    "themeDark": "Attiva tema scuro"
+  },
+  "Footer": {
+    "description": "Multiplex Aurora",
+    "tagline": "Il tuo cinema di fiducia",
+    "linkSchedule": "Palinsesto",
+    "linkBookings": "Le mie prenotazioni",
+    "linkAdmin": "Area Admin",
+    "copyright": "Tutti i diritti riservati."
+  },
+  "Palinsesto": {
+    "title": "Palinsesto",
+    "subtitle": "Consulta i film in programmazione e gli orari degli spettacoli.",
+    "daySelectorAria": "Seleziona il giorno",
+    "duration": "{minutes} min",
+    "rating": "{rating}",
+    "ratingAriaLabel": "Rating d'età {rating}",
+    "loadingAria": "Caricamento palinsesto in corso",
+    "noShowsTitle": "Nessuno spettacolo in programma",
+    "noShowsText": "Non ci sono proiezioni per la data {data}.",
+    "noShowsHint": "Prova a selezionare un'altra data dal calendario.",
+    "errorTitle": "Impossibile caricare il palinsesto",
+    "errorMessage": "Si è verificato un errore durante il recupero dei dati. Riprova più tardi.",
+    "retry": "Riprova",
+    "showtimeUntil": "fino alle {time}",
+    "ongoing": "In corso",
+    "ongoingAriaLabel": "Spettacolo in corso"
   },
   "Error": {
     "title": "Qualcosa è andato storto!",
@@ -27,9 +57,6 @@
   "Home": {
     "welcome": "Benvenuto",
     "description": "Seleziona un'opzione dal menu per iniziare."
-  },
-  "Footer": {
-    "description": "Cinema Schedule"
   },
   "TestRedux": {
     "title": "Test Redux Toolkit & RTK Query",

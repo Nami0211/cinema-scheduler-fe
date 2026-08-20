@@ -5,7 +5,7 @@ import path from 'path';
 // Carica variabili d'ambiente da .env (fallback)
 function loadEnv() {
   try {
-    const envPath = path.resolve(process.cwd(), '.env');
+    const envPath = path.resolve(process.cwd(), '.env.local');
     if (fs.existsSync(envPath)) {
       const envFile = fs.readFileSync(envPath, 'utf8');
       envFile.split('\n').forEach((line) => {

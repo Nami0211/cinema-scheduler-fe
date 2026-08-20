@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import PalinsestoClient from './PalinsestoClient';
+import { getGiorniSettimanaCorrente, getDataValida } from 'utils/date';
 
 interface PalinsestoPageProps {
   searchParams: Promise<{ data?: string }>;
@@ -23,36 +24,13 @@ interface PalinsestoPageProps {
  * ma durante lo sviluppo con mock, il pattern attuale è la scelta corretta.
  */
 
-/** I 7 giorni di programmazione disponibili nelle fixture (UTC). */
-const GIORNI_PROGRAMMAZIONE = [
-  '2026-08-03',
-  '2026-08-04',
-  '2026-08-05',
-  '2026-08-06',
-  '2026-08-07',
-  '2026-08-08',
-  '2026-08-09',
-];
-
-/**
- * Valida il parametro data dall'URL.
- * Se la data non è valida o è fuori dalla settimana in programmazione,
- * ritorna il primo giorno disponibile come fallback.
- */
-function getDataValida(dataParam: string | undefined): string {
-  if (dataParam && GIORNI_PROGRAMMAZIONE.includes(dataParam)) {
-    return dataParam;
-  }
-  // Fallback: primo giorno disponibile
-  return GIORNI_PROGRAMMAZIONE[0];
-}
-
 export async function generateMetadata({
   searchParams,
 }: PalinsestoPageProps): Promise<Metadata> {
   const params = await searchParams;
   const t = await getTranslations('Palinsesto');
-  const data = getDataValida(params.data);
+  const giorniDisponibili = getGiorniSettimanaCorrente();
+  const data = getDataValida(params.data, giorniDisponibili);
 
   return {
     title: `${t('title')} — ${data} | Cinema Aurora`,
@@ -64,12 +42,13 @@ export default async function PalinsestoPage({
   searchParams,
 }: PalinsestoPageProps) {
   const params = await searchParams;
-  const dataValida = getDataValida(params.data);
+  const giorniDisponibili = getGiorniSettimanaCorrente();
+  const dataValida = getDataValida(params.data, giorniDisponibili);
 
   return (
     <PalinsestoClient
       dataIniziale={dataValida}
-      giorniDisponibili={GIORNI_PROGRAMMAZIONE}
+      giorniDisponibili={giorniDisponibili}
     />
   );
 }

@@ -6,7 +6,7 @@ interface ShowtimeChipProps {
   dataOraInizio: string; // ISO UTC string
   dataOraFine: string; // ISO UTC string
   salaNome: string;
-  proiezioneId: number;
+  proiezioneId: number | string;
 }
 
 function formatOra(isoUtc: string): string {
