@@ -3,21 +3,54 @@ import films from '../fixtures/film.json';
 import proiezioni from '../fixtures/proiezioni.json';
 import sale from '../fixtures/sale.json';
 
+interface FilmFixture {
+  id: number | string;
+  titolo: string;
+  durataMinuti: number;
+  genere: string;
+  classificazione: string;
+  creata_il?: string;
+  aggiornata_il?: string;
+  eliminata?: boolean;
+}
+
 interface ProiezioneFixture {
   id: number;
-  filmId: number;
+  filmId: number | string;
   salaId: number;
   dataOraInizio: string;
   dataOraFine: string;
 }
 
+// In-memory list initialized from fixtures
+const filmsList: FilmFixture[] = (
+  films as unknown as Array<
+    FilmFixture & {
+      ratingEta?: string;
+      durata?: number;
+      durata_minuti?: number;
+    }
+  >
+).map((f) => {
+  const dur = Number(f.durataMinuti ?? f.durata_minuti ?? f.durata ?? 0);
+  const rating = f.classificazione ?? f.ratingEta ?? 'T';
+  return {
+    ...f,
+    durataMinuti: dur,
+    durata_minuti: dur,
+    classificazione: rating,
+    ratingEta: rating,
+  };
+});
+
 export const handlers = [
   http.get('*/api/films', () => {
+    const activeFilms = filmsList.filter((f) => !f.eliminata);
     return HttpResponse.json({
-      items: films,
-      total: films.length,
+      items: activeFilms,
+      total: activeFilms.length,
       page: 1,
-      pageSize: films.length,
+      pageSize: activeFilms.length,
     });
   }),
 
@@ -31,8 +64,10 @@ export const handlers = [
   }),
 
   http.get('*/api/films/:id', ({ params }) => {
-    const id = Number(params.id);
-    const film = films.find((f: { id: number }) => f.id === id);
+    const id = params.id;
+    const film = filmsList.find(
+      (f) => String(f.id) === String(id) && !f.eliminata
+    );
 
     if (!film) {
       return HttpResponse.json(
@@ -42,6 +77,112 @@ export const handlers = [
     }
 
     return HttpResponse.json(film);
+  }),
+
+  http.post('*/api/films', async ({ request }) => {
+    const body = (await request.json()) as Partial<FilmFixture>;
+
+    // Trigger mock backend 400 validation error for testing
+    if (body.titolo === 'TRIGGER_400') {
+      return HttpResponse.json(
+        {
+          error: {
+            code: 'VALIDATION_ERROR',
+            message: 'Dati del film non validi',
+            details: {
+              titolo: 'Titolo già esistente nel sistema (mock error)',
+              durataMinuti: 'La durata deve essere un valore positivo',
+            },
+          },
+        },
+        { status: 400 }
+      );
+    }
+
+    if (
+      !body.titolo ||
+      !body.durataMinuti ||
+      !body.genere ||
+      !body.classificazione
+    ) {
+      return HttpResponse.json(
+        {
+          error: {
+            code: 'VALIDATION_ERROR',
+            message: 'Campi obbligatori mancanti',
+            details: {
+              titolo: !body.titolo ? 'Il titolo è obbligatorio' : undefined,
+              durataMinuti: !body.durataMinuti
+                ? 'La durata è obbligatoria'
+                : undefined,
+            },
+          },
+        },
+        { status: 400 }
+      );
+    }
+
+    const newFilm: FilmFixture = {
+      id: Date.now(),
+      titolo: body.titolo,
+      durataMinuti: Number(body.durataMinuti),
+      genere: body.genere,
+      classificazione: body.classificazione,
+      creata_il: new Date().toISOString(),
+      aggiornata_il: new Date().toISOString(),
+      eliminata: false,
+    };
+
+    filmsList.push(newFilm);
+    return HttpResponse.json(newFilm, { status: 201 });
+  }),
+
+  http.patch('*/api/films/:id', async ({ params, request }) => {
+    const id = params.id;
+    const body = (await request.json()) as Partial<FilmFixture>;
+    const filmIndex = filmsList.findIndex((f) => String(f.id) === String(id));
+
+    if (filmIndex === -1) {
+      return HttpResponse.json(
+        { error: { code: 'NOT_FOUND', message: 'Film non trovato' } },
+        { status: 404 }
+      );
+    }
+
+    if (body.titolo === 'TRIGGER_400') {
+      return HttpResponse.json(
+        {
+          error: {
+            code: 'VALIDATION_ERROR',
+            message: 'Dati del film non validi',
+            details: {
+              titolo: 'Titolo non valido per la modifica (mock error)',
+            },
+          },
+        },
+        { status: 400 }
+      );
+    }
+
+    const updatedFilm = {
+      ...filmsList[filmIndex],
+      ...body,
+      aggiornata_il: new Date().toISOString(),
+    };
+    filmsList[filmIndex] = updatedFilm;
+
+    return HttpResponse.json(updatedFilm);
+  }),
+
+  http.delete('*/api/films/:id', ({ params }) => {
+    const id = params.id;
+    const filmIndex = filmsList.findIndex((f) => String(f.id) === String(id));
+
+    if (filmIndex !== -1) {
+      filmsList[filmIndex] = { ...filmsList[filmIndex], eliminata: true };
+    }
+
+    return new HttpResponse(null, { status: 204 });
   }),
 
   http.get('*/api/proiezioni/palinsesto/:data', ({ params }) => {
@@ -69,7 +210,7 @@ export const handlers = [
     }
 
     const items = matches.map((p) => {
-      const film = films.find((f: { id: number }) => f.id === p.filmId);
+      const film = filmsList.find((f) => String(f.id) === String(p.filmId));
       const sala = sale.find((s: { id: number }) => s.id === p.salaId);
       return {
         ...p,

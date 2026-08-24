@@ -103,6 +103,9 @@
   /* ── Alpha & Gradients ────────────────────────────────── */
   --color-gold-alpha-8: rgba(238, 119, 7, 0.08);
   --color-gold-alpha-10: rgba(238, 119, 7, 0.1);
+  --color-success-alpha-15: rgba(56, 161, 105, 0.15);
+  --color-danger-alpha-15: rgba(229, 62, 62, 0.15);
+  --color-overlay-backdrop: rgba(0, 0, 0, 0.75);
   --gradient-poster-overlay: linear-gradient(
     to bottom,
     transparent 60%,

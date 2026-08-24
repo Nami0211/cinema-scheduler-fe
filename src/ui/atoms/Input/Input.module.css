@@ -1,3 +1,16 @@
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.label {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-foreground);
+}
+
 .input {
   display: flex;
   width: 100%;
@@ -27,4 +40,18 @@
   opacity: 0.6;
   cursor: not-allowed;
   background-color: var(--color-secondary);
+}
+
+.hasError {
+  border-color: var(--color-danger) !important;
+}
+
+.hasError:focus-visible {
+  box-shadow: 0 0 0 1px var(--color-danger) !important;
+}
+
+.errorText {
+  font-size: var(--font-size-xs);
+  color: var(--color-danger);
+  margin-top: var(--space-2);
 }
