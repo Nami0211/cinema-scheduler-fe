@@ -10,27 +10,24 @@ interface DaySelectorProps {
   onSelectDay: (giorno: string) => void;
 }
 
-const GIORNI_SETTIMANA = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
-const MESI = [
-  'gen',
-  'feb',
-  'mar',
-  'apr',
-  'mag',
-  'giu',
-  'lug',
-  'ago',
-  'set',
-  'ott',
-  'nov',
-  'dic',
-];
-
 function formatLabel(dateString: string): { giorno: string; data: string } {
   const [year, month, day] = dateString.split('-').map(Number);
   const date = new Date(Date.UTC(year, month - 1, day));
-  const giornoSettimana = GIORNI_SETTIMANA[date.getUTCDay()];
-  const dataParte = `${day} ${MESI[month - 1]}`;
+
+  const rawDayName = new Intl.DateTimeFormat('it-IT', {
+    weekday: 'short',
+    timeZone: 'UTC',
+  }).format(date);
+  const giornoSettimana =
+    rawDayName.charAt(0).toUpperCase() + rawDayName.slice(1, 3);
+
+  const rawMonthName = new Intl.DateTimeFormat('it-IT', {
+    month: 'short',
+    timeZone: 'UTC',
+  }).format(date);
+  const monthName = rawMonthName.replace('.', '');
+  const dataParte = `${day} ${monthName}`;
+
   return { giorno: giornoSettimana, data: dataParte };
 }
 

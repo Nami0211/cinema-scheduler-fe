@@ -17,7 +17,7 @@ function loadEnv() {
         }
       });
     }
-  } catch (e) {
+  } catch {
     // ignore
   }
 }
@@ -82,7 +82,7 @@ async function run() {
     console.log(`\nClient API generato con successo in ${outputDir}!`);
   } catch (error) {
     console.error(
-      `\n[ERRORE] Impossibile completare la generazione del client API.`
+      `\n[ERRORE] Impossibile completare la generazione del client API: ${error.message || error}`
     );
     process.exit(1);
   }

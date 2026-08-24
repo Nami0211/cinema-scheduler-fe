@@ -50,6 +50,7 @@ function groupByFilm(proiezioni: ProiezioneArricchita[]): Array<{
 }
 
 export default function PalinsestoClient({
+  dataIniziale,
   giorniDisponibili,
 }: PalinsestoClientProps) {
   const t = useTranslations('Palinsesto');
@@ -58,9 +59,9 @@ export default function PalinsestoClient({
   const { data: films } = useGetFilmsQuery();
   const { data: sale } = useGetSaleQuery();
 
-  // Data correntemente richiesta nell'URL
+  // Data correntemente richiesta nell'URL (fallback su dataIniziale fornita dal Server Component)
   const searchParams = useSearchParams();
-  const rawData = searchParams.get('data') ?? undefined;
+  const rawData = searchParams.get('data') ?? dataIniziale;
   const currentData = useMemo(() => {
     return getDataValida(rawData, giorniDisponibili);
   }, [rawData, giorniDisponibili]);
