@@ -15,6 +15,7 @@ import { Spinner } from 'ui/atoms/Spinner/Spinner';
 import { FilmTable } from './FilmTable';
 import { FilmFormModal } from './FilmFormModal';
 import { DeleteConfirmModal } from './DeleteConfirmModal';
+import { AdminSubNav } from '../AdminSubNav';
 import styles from './adminFilm.module.css';
 
 export function AdminFilmClient() {
@@ -107,7 +108,9 @@ export function AdminFilmClient() {
 
   return (
     <div className={styles.page}>
+      <AdminSubNav />
       {/* Intestazione pagina */}
+
       <div className={styles.header}>
         <div className={styles.headerInfo}>
           <h1 className={styles.title}>{t('title')}</h1>

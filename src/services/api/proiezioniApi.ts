@@ -24,30 +24,80 @@ export const proiezioniApi = createApi({
     getProiezioniByData: builder.query<ProiezioneArricchita[], string>({
       query: (data) => `/proiezioni/palinsesto/${data}`,
       transformResponse: (response: unknown) => {
-        const respObj = response as
-          { data?: unknown[]; items?: unknown[] } | undefined;
-        const rawItems: unknown[] =
-          respObj?.data ??
-          respObj?.items ??
-          (Array.isArray(response) ? response : []);
+        let rawItems: unknown[] = [];
+        if (Array.isArray(response)) {
+          rawItems = response;
+        } else if (typeof response === 'object' && response !== null) {
+          const obj = response as Record<string, unknown>;
+          if (Array.isArray(obj.data)) {
+            rawItems = obj.data;
+          } else if (Array.isArray(obj.items)) {
+            rawItems = obj.items;
+          }
+        }
 
         return rawItems.map((item) => {
           const it = item as Record<string, unknown>;
-          const filmObj = it.film as Record<string, unknown> | undefined;
-          const salaObj = it.sala as Record<string, unknown> | undefined;
+          const filmObj =
+            it.film && typeof it.film === 'object'
+              ? (it.film as Record<string, unknown>)
+              : undefined;
+          const salaObj =
+            it.sala && typeof it.sala === 'object'
+              ? (it.sala as Record<string, unknown>)
+              : undefined;
+
+          const id = (it.id ?? it.proiezioneId ?? it.proiezione_id) as number;
+          const filmId = (it.filmId ??
+            it.film_id ??
+            filmObj?.id ??
+            (typeof it.film === 'number' || typeof it.film === 'string'
+              ? it.film
+              : undefined)) as number;
+          const salaId = (it.salaId ??
+            it.sala_id ??
+            salaObj?.id ??
+            (typeof it.sala === 'number' || typeof it.sala === 'string'
+              ? it.sala
+              : undefined)) as number;
+
+          const dataOraInizio = (it.dataOraInizio ??
+            it.data_ora_inizio ??
+            it.dataInizio ??
+            it.data_inizio) as string;
+
+          const dataOraFine = (it.dataOraFine ??
+            it.data_ora_fine ??
+            it.dataFine ??
+            it.data_fine) as string;
 
           return {
             ...it,
-            id: (it.id ?? it.proiezioneId) as number,
-            filmId: (it.filmId ?? it.film_id ?? filmObj?.id) as number,
-            salaId: (it.salaId ?? it.sala_id ?? salaObj?.id) as number,
+            id,
+            filmId,
+            salaId,
+            dataOraInizio,
+            dataOraFine,
             film: filmObj
               ? {
                   ...filmObj,
-                  durataMinuti: (filmObj.durataMinuti ??
-                    filmObj.durata) as number,
+                  id: filmObj.id ?? filmId,
+                  titolo: (filmObj.titolo ?? filmObj.title) as string,
+                  durataMinuti: Number(
+                    filmObj.durataMinuti ??
+                      filmObj.durata_minuti ??
+                      filmObj.durata ??
+                      0
+                  ),
                 }
               : filmObj,
+            sala: salaObj
+              ? {
+                  ...salaObj,
+                  id: salaObj.id ?? salaId,
+                  nome: (salaObj.nome ?? salaObj.name) as string,
+                }
+              : salaObj,
           } as unknown as ProiezioneArricchita;
         });
       },
@@ -59,10 +109,43 @@ export const proiezioniApi = createApi({
                 id,
               })),
               { type: 'Proiezione', id: `LIST_${data}` },
+              { type: 'Proiezione', id: 'LIST' },
             ]
-          : [{ type: 'Proiezione', id: `LIST_${data}` }],
+          : [
+              { type: 'Proiezione', id: `LIST_${data}` },
+              { type: 'Proiezione', id: 'LIST' },
+            ],
+    }),
+    createProiezione: builder.mutation<
+      ProiezioneArricchita,
+      { filmId: number; salaId: number; dataOraInizio: string }
+    >({
+      query: (data) => ({
+        url: '/proiezioni',
+        method: 'POST',
+        body: {
+          film_id: data.filmId,
+          sala_id: data.salaId,
+          data_ora_inizio: data.dataOraInizio,
+          filmId: data.filmId,
+          salaId: data.salaId,
+          dataOraInizio: data.dataOraInizio,
+        },
+      }),
+      invalidatesTags: [{ type: 'Proiezione' }],
+    }),
+    deleteProiezione: builder.mutation<void, number | string>({
+      query: (id) => ({
+        url: `/proiezioni/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: [{ type: 'Proiezione' }],
     }),
   }),
 });
 
-export const { useGetProiezioniByDataQuery } = proiezioniApi;
+export const {
+  useGetProiezioniByDataQuery,
+  useCreateProiezioneMutation,
+  useDeleteProiezioneMutation,
+} = proiezioniApi;

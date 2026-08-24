@@ -1,0 +1,26 @@
+.subNav {
+  display: flex;
+  gap: var(--space-8);
+  border-bottom: 2px solid var(--color-border);
+  margin-bottom: var(--space-16);
+}
+
+.tab {
+  padding: var(--space-8) var(--space-16);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  color: var(--color-foreground);
+}
+
+.activeTab {
+  color: var(--color-primary, #e50914);
+  border-bottom-color: var(--color-primary, #e50914);
+}

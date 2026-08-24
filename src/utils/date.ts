@@ -55,3 +55,74 @@ export function getDataValida(
   }
   return giorniDisponibili[0];
 }
+
+/** Buffer di pulizia standard tra due proiezioni nella stessa sala (in minuti) */
+export const BUFFER_PULIZIA_MINUTI = 15;
+
+/**
+ * Formatta una data ISO UTC (o oggetto Date) nel fuso orario italiano (Europe/Rome) in formato HH:mm.
+ */
+export function formatUtcToLocalTime(isoUtcString: string | Date): string {
+  if (!isoUtcString) return '';
+  const d =
+    typeof isoUtcString === 'string' ? new Date(isoUtcString) : isoUtcString;
+  if (isNaN(d.getTime())) return '';
+  return d.toLocaleTimeString('it-IT', {
+    timeZone: 'Europe/Rome',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
+/**
+ * Formatta una data ISO UTC (o oggetto Date) nel fuso orario italiano (Europe/Rome) in formato YYYY-MM-DD.
+ */
+export function formatUtcToLocalDate(isoUtcString: string | Date): string {
+  if (!isoUtcString) return '';
+  const d =
+    typeof isoUtcString === 'string' ? new Date(isoUtcString) : isoUtcString;
+  if (isNaN(d.getTime())) return '';
+  // Utilizza Intl per ricavare anno, mese e giorno nel fuso italiano
+  const formatter = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Rome',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+  return formatter.format(d);
+}
+
+/**
+ * Calcola l'orario di fine film ed il termine dell'occupazione della sala (film + buffer 15m).
+ */
+export function calculateFineProiezione(
+  dataOraInizioUtcIso: string | Date,
+  durataMinuti: number
+): { dataOraFineUtc: string; fineOccupazioneUtc: string } {
+  const start = new Date(dataOraInizioUtcIso);
+  if (isNaN(start.getTime()) || durataMinuti <= 0) {
+    return { dataOraFineUtc: '', fineOccupazioneUtc: '' };
+  }
+
+  const fineFilmMs = start.getTime() + durataMinuti * 60 * 1000;
+  const fineOccupazioneMs =
+    start.getTime() + (durataMinuti + BUFFER_PULIZIA_MINUTI) * 60 * 1000;
+
+  return {
+    dataOraFineUtc: new Date(fineFilmMs).toISOString(),
+    fineOccupazioneUtc: new Date(fineOccupazioneMs).toISOString(),
+  };
+}
+
+/**
+ * Converte una data locale YYYY-MM-DD ed un orario locale HH:mm in una stringa ISO in formato UTC.
+ */
+export function parseLocalInputToUtcIso(
+  dateStr: string,
+  timeStr: string
+): string {
+  if (!dateStr || !timeStr) return '';
+  const localDate = new Date(`${dateStr}T${timeStr}:00`);
+  if (isNaN(localDate.getTime())) return '';
+  return localDate.toISOString();
+}
