@@ -4,9 +4,7 @@ import type { Proiezione, Film, Sale } from 'api-client';
 
 /**
  * Proiezione arricchita con film e sala annidati,
- * come restituita dal mock handler (join in-memory).
- * Il backend reale restituisce la stessa struttura quando si includono
- * le relazioni nella risposta.
+ * come restituita dall'endpoint GET /proiezioni/palinsesto/{data}.
  */
 export interface ProiezioneArricchita extends Omit<
   Proiezione,
@@ -22,6 +20,7 @@ export const proiezioniApi = createApi({
   tagTypes: ['Proiezione'],
   endpoints: (builder) => ({
     getProiezioniByData: builder.query<ProiezioneArricchita[], string>({
+      // Contratto reale BE: GET /proiezioni/palinsesto/{data}
       query: (data) => `/proiezioni/palinsesto/${data}`,
       transformResponse: (response: unknown) => {
         let rawItems: unknown[] = [];
@@ -123,13 +122,11 @@ export const proiezioniApi = createApi({
       query: (data) => ({
         url: '/proiezioni',
         method: 'POST',
+        // Il backend reale usa snake_case per il body di POST /proiezioni
         body: {
           film_id: data.filmId,
           sala_id: data.salaId,
           data_ora_inizio: data.dataOraInizio,
-          filmId: data.filmId,
-          salaId: data.salaId,
-          dataOraInizio: data.dataOraInizio,
         },
       }),
       invalidatesTags: [{ type: 'Proiezione' }],

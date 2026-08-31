@@ -8,36 +8,14 @@ export const saleApi = createApi({
   tagTypes: ['Sala'],
   endpoints: (builder) => ({
     getSale: builder.query<Sale[], void>({
+      // Contratto reale BE: GET /sale → { data: Sale[], meta: {...} }
       query: () => '/sale',
-      transformResponse: (response: unknown) => {
-        let rawItems: unknown[] = [];
-        if (Array.isArray(response)) {
-          rawItems = response;
-        } else if (typeof response === 'object' && response !== null) {
-          const obj = response as Record<string, unknown>;
-          if (Array.isArray(obj.data)) {
-            rawItems = obj.data;
-          } else if (Array.isArray(obj.items)) {
-            rawItems = obj.items;
-          } else if (typeof obj.data === 'object' && obj.data !== null) {
-            const nested = obj.data as Record<string, unknown>;
-            if (Array.isArray(nested.items)) {
-              rawItems = nested.items;
-            } else if (Array.isArray(nested.data)) {
-              rawItems = nested.data;
-            }
-          }
-        }
-
-        return rawItems.map((item) => {
-          const it = item as Record<string, unknown>;
-          return {
-            ...it,
-            id: (it.id ?? it.salaId ?? it.sala_id) as number,
-            nome: (it.nome ?? it.name ?? `Sala ${it.id}`) as string,
-            capienza: (it.capienza ?? it.capacity ?? 0) as number,
-          } as unknown as Sale;
-        });
+      transformResponse: (response: unknown): Sale[] => {
+        if (Array.isArray(response)) return response as Sale[];
+        const obj = response as Record<string, unknown>;
+        // Il BE avvolge la lista in { data: [...], meta: {...} }
+        if (Array.isArray(obj.data)) return obj.data as Sale[];
+        return [];
       },
       providesTags: (result) =>
         result

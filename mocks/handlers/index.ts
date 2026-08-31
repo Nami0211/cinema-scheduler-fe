@@ -59,12 +59,16 @@ export const handlers = [
     });
   }),
 
+  // Contratto reale BE: GET /sale → { data: Sale[], meta: {...} }
   http.get('*/api/sale', () => {
     return HttpResponse.json({
-      items: sale,
-      total: sale.length,
-      page: 1,
-      pageSize: sale.length,
+      data: sale,
+      meta: {
+        page: 1,
+        limit: sale.length,
+        totalRecords: sale.length,
+        totalPages: 1,
+      },
     });
   }),
 
@@ -190,6 +194,7 @@ export const handlers = [
     return new HttpResponse(null, { status: 204 });
   }),
 
+  // Contratto reale BE: GET /proiezioni/palinsesto/{data}
   http.get('*/api/proiezioni/palinsesto/:data', ({ params }) => {
     const data = params.data as string;
 
@@ -240,6 +245,7 @@ export const handlers = [
       data_ora_inizio?: string;
     };
 
+    // Il BE reale usa snake_case; supportiamo entrambi per compatibilità con il mock
     const filmId = Number(body.filmId ?? body.film_id);
     const salaId = Number(body.salaId ?? body.sala_id);
     const dataOraInizio = body.dataOraInizio ?? body.data_ora_inizio;

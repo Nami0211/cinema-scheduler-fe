@@ -4,7 +4,6 @@ import { baseQuery } from 'services/baseQuery';
 /**
  * Forma di ogni elemento restituito da GET /proiezioni/palinsesto/{data}.
  * Rispecchia il tipo ProiezioneDettaglio definito nel BE (proiezione.repository.ts).
- * I campi film e sala sono snake_case nel JSON del BE.
  */
 export interface PalinsestoFilm {
   id: string;
@@ -34,20 +33,15 @@ export const palinsestoApi = createApi({
   endpoints: (builder) => ({
     /**
      * Recupera il palinsesto per una data specifica nel formato YYYY-MM-DD.
-     * Chiama: GET /proiezioni/palinsesto/{data}
-     * Risposta BE: { status: 'success', data: PalinsestoItem[] }
+     * Contratto reale BE: GET /proiezioni/palinsesto/{data}
      */
     getPalinsestoByData: builder.query<PalinsestoItem[], string>({
       query: (data) => `/proiezioni/palinsesto/${data}`,
       transformResponse: (response: unknown): PalinsestoItem[] => {
+        if (Array.isArray(response)) return response as PalinsestoItem[];
         const obj = response as Record<string, unknown>;
-        // Il BE risponde con { status: 'success', data: [...] }
-        const raw: unknown[] = Array.isArray(response)
-          ? response
-          : Array.isArray(obj.data)
-            ? (obj.data as unknown[])
-            : [];
-        return raw as PalinsestoItem[];
+        if (Array.isArray(obj.data)) return obj.data as PalinsestoItem[];
+        return [];
       },
       providesTags: (_result, _error, data) => [
         { type: 'Palinsesto', id: data },

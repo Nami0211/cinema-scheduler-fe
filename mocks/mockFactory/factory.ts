@@ -39,7 +39,6 @@ export const buildSala = (overrides?: Partial<Sale>): Sale => {
   const colonne = faker.number.int({ min: 6, max: 10 });
   return {
     id: String(faker.number.int({ min: 1, max: 100 })),
-    cinemaId: '1',
     nome: `Sala ${faker.number.int({ min: 1, max: 10 })}`,
     righe,
     colonne,
