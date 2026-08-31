@@ -1,6 +1,13 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from 'services/baseQuery';
-import type { Proiezione, Film, Sale } from 'api-client';
+import type {
+  Proiezione,
+  Film,
+  Sale,
+  ProiezioniPostRequest,
+  ProiezioniPost201Response,
+} from 'api-client';
+import { ProiezioniPostRequestToJSONTyped } from 'api-client';
 
 /**
  * Proiezione arricchita con film e sala annidati,
@@ -116,18 +123,16 @@ export const proiezioniApi = createApi({
             ],
     }),
     createProiezione: builder.mutation<
-      ProiezioneArricchita,
-      { filmId: number; salaId: number; dataOraInizio: string }
+      ProiezioniPost201Response,
+      ProiezioniPostRequest
     >({
       query: (data) => ({
         url: '/proiezioni',
         method: 'POST',
-        // Il backend reale usa snake_case per il body di POST /proiezioni
-        body: {
-          film_id: data.filmId,
-          sala_id: data.salaId,
-          data_ora_inizio: data.dataOraInizio,
-        },
+        // ProiezioniPostRequestToJSONTyped converte automaticamente i campi
+        // da camelCase (salaId, filmId, dataOraInizio) a snake_case (sala_id, film_id,
+        // data_ora_inizio) come atteso dal backend reale.
+        body: ProiezioniPostRequestToJSONTyped(data),
       }),
       invalidatesTags: [{ type: 'Proiezione' }],
     }),

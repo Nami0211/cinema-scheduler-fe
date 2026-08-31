@@ -10,6 +10,7 @@ import {
   useDeleteProiezioneMutation,
 } from 'services/api/proiezioniApi';
 import type { ProiezioneArricchita } from 'services/api/proiezioniApi';
+import type { ProiezioniPostRequest } from 'api-client';
 import type { AppError } from 'services/baseQuery';
 import { Button } from 'ui/atoms/Button/Button';
 import { Spinner } from 'ui/atoms/Spinner/Spinner';
@@ -64,11 +65,7 @@ export function AdminPalinsestoClient() {
     setIsDeleteModalOpen(true);
   }
 
-  async function handleCreateSubmit(data: {
-    filmId: number;
-    salaId: number;
-    dataOraInizio: string;
-  }) {
+  async function handleCreateSubmit(data: ProiezioniPostRequest) {
     setFeedback(null);
     const res = await createProiezione(data);
 

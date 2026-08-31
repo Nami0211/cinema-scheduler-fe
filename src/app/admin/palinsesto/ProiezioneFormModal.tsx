@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import type { Film, Sale } from 'api-client';
+import type { Film, Sale, ProiezioniPostRequest } from 'api-client';
 import type { AppError } from 'services/baseQuery';
 import { Modal } from 'ui/molecules/Modal';
 import { Input } from 'ui/atoms/Input/Input';
@@ -19,11 +19,7 @@ import styles from './adminPalinsesto.module.css';
 interface ProiezioneFormModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: {
-    filmId: number;
-    salaId: number;
-    dataOraInizio: string;
-  }) => Promise<void>;
+  onSubmit: (data: ProiezioniPostRequest) => Promise<void>;
   films: Film[];
   sale: Sale[];
   initialDate?: string;
@@ -96,9 +92,11 @@ export function ProiezioneFormModal({
     if (!validate()) return;
 
     await onSubmit({
-      filmId: Number(filmId),
-      salaId: Number(salaId),
-      dataOraInizio: dataOraInizioUtc,
+      // Gli ID sono UUID (string) — non serve Number()
+      filmId: filmId,
+      salaId: salaId,
+      // Il tipo generato usa Date; ProiezioniPostRequestToJSONTyped chiama .toISOString()
+      dataOraInizio: new Date(dataOraInizioUtc),
     });
   }
 

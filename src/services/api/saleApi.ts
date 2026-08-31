@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from 'services/baseQuery';
-import type { Sale } from 'api-client';
+import type { Sale, SaleGet200Response } from 'api-client';
 
 export const saleApi = createApi({
   reducerPath: 'saleApi',
@@ -8,13 +8,13 @@ export const saleApi = createApi({
   tagTypes: ['Sala'],
   endpoints: (builder) => ({
     getSale: builder.query<Sale[], void>({
-      // Contratto reale BE: GET /sale → { data: Sale[], meta: {...} }
+      // Contratto BE: GET /sale → SaleGet200Response { data: Sale[], meta: {...} }
       query: () => '/sale',
       transformResponse: (response: unknown): Sale[] => {
+        // Il codegen ha già il tipo corretto: SaleGet200Response.data
+        const typed = response as SaleGet200Response;
+        if (Array.isArray(typed?.data)) return typed.data;
         if (Array.isArray(response)) return response as Sale[];
-        const obj = response as Record<string, unknown>;
-        // Il BE avvolge la lista in { data: [...], meta: {...} }
-        if (Array.isArray(obj.data)) return obj.data as Sale[];
         return [];
       },
       providesTags: (result) =>
