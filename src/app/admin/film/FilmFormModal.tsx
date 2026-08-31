@@ -60,11 +60,22 @@ function FilmFormContent({
   >(film?.classificazione ?? '');
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
+  const FORM_FIELDS = ['titolo', 'durataMinuti', 'genere', 'classificazione'];
+
   // Derived backend 400 error field map & general error message
-  const backendDetails =
-    error?.status === 400 && error.details && typeof error.details === 'object'
+  const rawDetails =
+    error?.status === 400 &&
+    error.details &&
+    typeof error.details === 'object' &&
+    !Array.isArray(error.details)
       ? (error.details as Record<string, string>)
       : null;
+
+  const hasMappedField = rawDetails
+    ? FORM_FIELDS.some((field) => Boolean(rawDetails[field]))
+    : false;
+
+  const backendDetails = hasMappedField ? rawDetails : null;
 
   const generalError = error && !backendDetails ? error.message : null;
 
@@ -168,7 +179,9 @@ function FilmFormContent({
             error={mergedFieldErrors.genere}
             disabled={isLoading}
           >
-            <option value="">{t('fieldGenreSelect')}</option>
+            <option value="" disabled>
+              {t('fieldGenreSelect')}
+            </option>
             {GENRE_OPTIONS.map((g) => (
               <option key={g} value={g}>
                 {g}
@@ -190,7 +203,9 @@ function FilmFormContent({
           error={mergedFieldErrors.classificazione}
           disabled={isLoading}
         >
-          <option value="">{t('fieldRatingSelect')}</option>
+          <option value="" disabled>
+            {t('fieldRatingSelect')}
+          </option>
           {RATING_OPTIONS.map((r) => (
             <option key={r.value} value={r.value}>
               {r.label}

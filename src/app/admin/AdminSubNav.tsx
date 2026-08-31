@@ -14,7 +14,7 @@ export function AdminSubNav() {
   const isPalinsesto = pathname.startsWith('/admin/palinsesto');
 
   return (
-    <nav className={styles.subNav} aria-label="Navigazione Admin">
+    <nav className={styles.subNav} aria-label={t('ariaLabel')}>
       <Link
         href="/admin/film"
         className={classNames(styles.tab, { [styles.activeTab]: isFilm })}

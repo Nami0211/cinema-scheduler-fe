@@ -30,8 +30,9 @@ export function DeleteProiezioneModal({
 
   if (!proiezione) return null;
 
-  const filmTitolo = proiezione.film?.titolo ?? 'Film';
-  const salaNome = proiezione.sala?.nome ?? `Sala ${proiezione.salaId}`;
+  const filmTitolo = proiezione.film?.titolo ?? t('defaultFilm');
+  const salaNome =
+    proiezione.sala?.nome ?? t('defaultSala', { id: proiezione.salaId });
   const oraInizio = formatUtcToLocalTime(proiezione.dataOraInizio);
 
   return (

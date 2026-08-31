@@ -27,16 +27,15 @@ interface ProiezioneFormModalProps {
   error?: AppError;
 }
 
-export function ProiezioneFormModal({
-  isOpen,
-  onClose,
+function ProiezioneFormContent({
   onSubmit,
+  onClose,
   films,
   sale,
   initialDate,
   isLoading,
   error,
-}: ProiezioneFormModalProps) {
+}: Omit<ProiezioneFormModalProps, 'isOpen'>) {
   const t = useTranslations('AdminPalinsesto');
 
   const [filmId, setFilmId] = useState<string>('');
@@ -52,17 +51,6 @@ export function ProiezioneFormModal({
     dateStr?: string;
     timeStr?: string;
   }>({});
-
-  const [prevIsOpen, setPrevIsOpen] = useState(false);
-
-  // Synchronize initial state when modal opens
-  if (isOpen && !prevIsOpen) {
-    setPrevIsOpen(true);
-    setDateStr(initialDate || getTodayString());
-    setFormErrors({});
-  } else if (!isOpen && prevIsOpen) {
-    setPrevIsOpen(false);
-  }
 
   const selectedFilm = films.find((f) => String(f.id) === filmId);
   const filmDurata = selectedFilm?.durataMinuti ?? 0;
@@ -92,10 +80,8 @@ export function ProiezioneFormModal({
     if (!validate()) return;
 
     await onSubmit({
-      // Gli ID sono UUID (string) — non serve Number()
       filmId: filmId,
       salaId: salaId,
-      // Il tipo generato usa Date; ProiezioniPostRequestToJSONTyped chiama .toISOString()
       dataOraInizio: new Date(dataOraInizioUtc),
     });
   }
@@ -114,26 +100,12 @@ export function ProiezioneFormModal({
       : undefined;
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title={t('modalTitle')}
-      footer={
-        <div className={styles.footerActions}>
-          <Button variant="secondary" onClick={onClose} disabled={isLoading}>
-            {t('cancel')}
-          </Button>
-          <Button
-            variant="primary"
-            onClick={handleSubmit}
-            isLoading={isLoading}
-          >
-            {isLoading ? t('submitting') : t('submit')}
-          </Button>
-        </div>
-      }
-    >
-      <form onSubmit={handleSubmit} className={styles.form}>
+    <>
+      <form
+        id="proiezione-form"
+        onSubmit={handleSubmit}
+        className={styles.form}
+      >
         {/* Banner Conflitto 409 */}
         {error?.status === 409 && (
           <div className={styles.conflictBox} role="alert">
@@ -170,7 +142,9 @@ export function ProiezioneFormModal({
             onChange={(e) => setFilmId(e.target.value)}
             error={formErrors.filmId}
           >
-            <option value="">{t('selectFilmPlaceholder')}</option>
+            <option value="" disabled>
+              {t('selectFilmPlaceholder')}
+            </option>
             {films.map((f) => (
               <option key={f.id} value={String(f.id)}>
                 {f.titolo} ({f.durataMinuti} min)
@@ -184,7 +158,9 @@ export function ProiezioneFormModal({
             onChange={(e) => setSalaId(e.target.value)}
             error={formErrors.salaId}
           >
-            <option value="">{t('selectSalaPlaceholder')}</option>
+            <option value="" disabled>
+              {t('selectSalaPlaceholder')}
+            </option>
             {sale.map((s) => (
               <option key={s.id} value={String(s.id)}>
                 {s.nome} ({s.capienza} posti)
@@ -235,6 +211,50 @@ export function ProiezioneFormModal({
           </div>
         )}
       </form>
+
+      <div className={styles.footerActions}>
+        <Button variant="secondary" onClick={onClose} disabled={isLoading}>
+          {t('cancel')}
+        </Button>
+        <Button
+          form="proiezione-form"
+          type="submit"
+          variant="primary"
+          isLoading={isLoading}
+        >
+          {isLoading ? t('submitting') : t('submit')}
+        </Button>
+      </div>
+    </>
+  );
+}
+
+export function ProiezioneFormModal({
+  isOpen,
+  onClose,
+  onSubmit,
+  films,
+  sale,
+  initialDate,
+  isLoading,
+  error,
+}: ProiezioneFormModalProps) {
+  const t = useTranslations('AdminPalinsesto');
+
+  if (!isOpen) return null;
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} title={t('modalTitle')}>
+      <ProiezioneFormContent
+        key={initialDate ?? 'new-proiezione'}
+        onSubmit={onSubmit}
+        onClose={onClose}
+        films={films}
+        sale={sale}
+        initialDate={initialDate}
+        isLoading={isLoading}
+        error={error}
+      />
     </Modal>
   );
 }

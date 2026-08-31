@@ -30,11 +30,15 @@ const GENRE_EMOJI: Record<string, string> = {
 
 export default function FilmCard({ film, proiezioni }: FilmCardProps) {
   const t = useTranslations('Palinsesto');
+
+  if (!film) return null;
+
   const rating =
     film.classificazione ??
-    (film as unknown as { ratingEta: FilmClassificazioneEnum }).ratingEta;
+    (film as unknown as { ratingEta?: FilmClassificazioneEnum })?.ratingEta ??
+    'T';
   const ratingClass = RATING_CSS_CLASS[rating] ?? 'ratingT';
-  const emoji = GENRE_EMOJI[film.genere] ?? '🎬';
+  const emoji = film.genere ? (GENRE_EMOJI[film.genere] ?? '🎬') : '🎬';
 
   const ordinate = [...proiezioni].sort(
     (a, b) =>
@@ -50,12 +54,16 @@ export default function FilmCard({ film, proiezioni }: FilmCardProps) {
 
       {/* Info film */}
       <div className={styles.filmInfo}>
-        <h2 className={styles.filmTitle}>{film.titolo}</h2>
+        <h2 className={styles.filmTitle}>
+          {film.titolo ?? t('defaultFilmTitle')}
+        </h2>
 
         <div className={styles.filmMeta}>
-          <span className={styles.filmGenre}>{film.genere}</span>
+          {film.genere && (
+            <span className={styles.filmGenre}>{film.genere}</span>
+          )}
           <span className={styles.filmDuration}>
-            {t('duration', { minutes: film.durataMinuti })}
+            {t('duration', { minutes: film.durataMinuti ?? 0 })}
           </span>
         </div>
 
@@ -86,7 +94,10 @@ export default function FilmCard({ film, proiezioni }: FilmCardProps) {
                 ? proiezione.dataOraFine.toISOString()
                 : String(proiezione.dataOraFine)
             }
-            salaNome={proiezione.sala.nome}
+            salaNome={
+              proiezione.sala?.nome ??
+              t('defaultSalaName', { id: proiezione.salaId ?? '' })
+            }
           />
         ))}
       </div>

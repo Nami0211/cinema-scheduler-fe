@@ -48,7 +48,7 @@ export function HallTimelineView({
               <div className={styles.hallHeader}>
                 <span className={styles.hallName}>{sala.nome}</span>
                 <span className={styles.hallCapienza}>
-                  {sala.capienza} posti
+                  {t('seats', { count: sala.capienza })}
                 </span>
               </div>
 
@@ -62,7 +62,8 @@ export function HallTimelineView({
                       films.find((f) => String(f.id) === String(p.filmId));
 
                     const filmTitolo =
-                      filmObj?.titolo ?? `Film #${p.filmId ?? '?'}`;
+                      filmObj?.titolo ??
+                      t('fallbackFilmTitle', { id: p.filmId ?? '?' });
                     const oraInizio = formatUtcToLocalTime(p.dataOraInizio);
 
                     // Usa dataOraFine dal backend (campo required secondo lo schema).
@@ -71,7 +72,7 @@ export function HallTimelineView({
                     const dataOraFineBackend = p.dataOraFine;
                     const oraFine = dataOraFineBackend
                       ? formatUtcToLocalTime(dataOraFineBackend)
-                      : '⚠️ n/d';
+                      : t('notAvailable');
 
                     const oraFineBuffer = dataOraFineBackend
                       ? formatUtcToLocalTime(
@@ -80,7 +81,7 @@ export function HallTimelineView({
                               BUFFER_PULIZIA_MINUTI * 60 * 1000
                           ).toISOString()
                         )
-                      : '⚠️ n/d';
+                      : t('notAvailable');
 
                     return (
                       <div key={p.id} className={styles.proiezioneCard}>
@@ -102,7 +103,7 @@ export function HallTimelineView({
                             🕒 {oraInizio} - {oraFine}
                           </span>
                           <span className={styles.bufferBadge}>
-                            🧹 {t('cleaningBuffer')} (fino alle {oraFineBuffer})
+                            {t('cleaningBufferUntil', { time: oraFineBuffer })}
                           </span>
                         </div>
                       </div>

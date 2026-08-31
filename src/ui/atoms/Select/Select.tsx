@@ -3,6 +3,7 @@ import cx from 'classnames';
 import styles from './Select.module.css';
 
 export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  placeHolder?: string;
   label?: string;
   error?: string;
 }

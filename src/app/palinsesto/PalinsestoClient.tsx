@@ -38,15 +38,18 @@ function groupByFilm(proiezioni: ProiezioneArricchita[]): Array<{
   >();
 
   for (const p of proiezioni) {
+    if (!p.film || !p.filmId) continue;
     if (!map.has(p.filmId)) {
       map.set(p.filmId, { film: p.film, proiezioni: [] });
     }
     map.get(p.filmId)!.proiezioni.push(p);
   }
 
-  return Array.from(map.values()).sort((a, b) =>
-    a.film.titolo.localeCompare(b.film.titolo, 'it')
-  );
+  return Array.from(map.values()).sort((a, b) => {
+    const titleA = a.film?.titolo ?? '';
+    const titleB = b.film?.titolo ?? '';
+    return titleA.localeCompare(titleB, 'it');
+  });
 }
 
 export default function PalinsestoClient({
@@ -83,13 +86,15 @@ export default function PalinsestoClient({
     if (!proiezioni) return [];
     const map = new Map<string | number, ProiezioneArricchita['sala']>();
     for (const p of proiezioni) {
-      if (p.sala && !map.has(p.sala.id)) {
+      if (p.sala && p.sala.id != null && !map.has(p.sala.id)) {
         map.set(p.sala.id, p.sala);
       }
     }
-    return Array.from(map.values()).sort((a, b) =>
-      a.nome.localeCompare(b.nome, 'it')
-    );
+    return Array.from(map.values()).sort((a, b) => {
+      const nameA = a?.nome ?? '';
+      const nameB = b?.nome ?? '';
+      return nameA.localeCompare(nameB, 'it');
+    });
   }, [sale, proiezioni]);
 
   const availableFilms = useMemo(() => {
@@ -97,13 +102,15 @@ export default function PalinsestoClient({
     if (!proiezioni) return [];
     const map = new Map<string | number, ProiezioneArricchita['film']>();
     for (const p of proiezioni) {
-      if (p.film && !map.has(p.film.id)) {
+      if (p.film && p.film.id != null && !map.has(p.film.id)) {
         map.set(p.film.id, p.film);
       }
     }
-    return Array.from(map.values()).sort((a, b) =>
-      a.titolo.localeCompare(b.titolo, 'it')
-    );
+    return Array.from(map.values()).sort((a, b) => {
+      const titleA = a?.titolo ?? '';
+      const titleB = b?.titolo ?? '';
+      return titleA.localeCompare(titleB, 'it');
+    });
   }, [films, proiezioni]);
 
   // Hook per i filtri agganciato alla query string dell'URL

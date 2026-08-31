@@ -45,7 +45,7 @@ export function FilmTable({ films, onEdit, onDelete }: FilmTableProps) {
         {
           id: 'durataMinuti',
           header: t('tableDuration'),
-          cell: (info) => `${info.getValue()} min`,
+          cell: (info) => t('durationFormat', { minutes: info.getValue() }),
         }
       ),
       columnHelper.accessor('genere', {

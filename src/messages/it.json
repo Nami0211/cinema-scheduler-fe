@@ -51,7 +51,9 @@
     "resetFilters": "Azzera filtri",
     "resultsCount": "{count, plural, =0 {Nessuno spettacolo} =1 {1 spettacolo} other {# spettacoli}}",
     "noShowsFilteredTitle": "Nessun risultato con i filtri selezionati",
-    "noShowsFilteredText": "Non ci sono proiezioni che soddisfano i filtri impostati."
+    "noShowsFilteredText": "Non ci sono proiezioni che soddisfano i filtri impostati.",
+    "defaultFilmTitle": "Film",
+    "defaultSalaName": "Sala #{id}"
   },
   "Error": {
     "title": "Qualcosa è andato storto!",
@@ -114,11 +116,13 @@
     "errGenreRequired": "Il genere è obbligatorio",
     "errRatingRequired": "La classificazione è obbligatoria",
     "errorLoading": "Errore durante il caricamento dei film",
-    "retry": "Riprova"
+    "retry": "Riprova",
+    "durationFormat": "{minutes} min"
   },
   "AdminNav": {
     "film": "Gestione Film",
-    "palinsesto": "Gestione Palinsesto"
+    "palinsesto": "Gestione Palinsesto",
+    "ariaLabel": "Navigazione Admin"
   },
   "AdminPalinsesto": {
     "title": "Gestione Palinsesto e Conflitti",
@@ -157,6 +161,12 @@
     "errFilmRequired": "Il film è obbligatorio",
     "errSalaRequired": "La sala è obbligatoria",
     "errDateRequired": "La data è obbligatoria",
-    "errTimeRequired": "L'ora di inizio è obbligatoria"
+    "errTimeRequired": "L'ora di inizio è obbligatoria",
+    "seats": "{count} posti",
+    "cleaningBufferUntil": "🧹 +15m pulizia (fino alle {time})",
+    "notAvailable": "⚠️ n/d",
+    "fallbackFilmTitle": "Film #{id}",
+    "defaultFilm": "Film",
+    "defaultSala": "Sala {id}"
   }
 }

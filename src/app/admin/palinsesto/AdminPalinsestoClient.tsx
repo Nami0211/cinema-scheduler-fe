@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { useGetSaleQuery } from 'services/api/saleApi';
 import { useGetFilmsQuery } from 'services/api/filmApi';
@@ -10,7 +10,7 @@ import {
   useDeleteProiezioneMutation,
 } from 'services/api/proiezioniApi';
 import type { ProiezioneArricchita } from 'services/api/proiezioniApi';
-import type { ProiezioniPostRequest } from 'api-client';
+import type { ProiezioniPostRequest, Sale, Film } from 'api-client';
 import type { AppError } from 'services/baseQuery';
 import { Button } from 'ui/atoms/Button/Button';
 import { Spinner } from 'ui/atoms/Spinner/Spinner';
@@ -37,6 +37,34 @@ export function AdminPalinsestoClient() {
     error: errorProiezioni,
     refetch,
   } = useGetProiezioniByDataQuery(selectedDate);
+
+  const availableSale = useMemo(() => {
+    if (sale && sale.length > 0) return sale;
+    if (!proiezioni) return [];
+    const map = new Map<string | number, Sale>();
+    for (const p of proiezioni) {
+      if (p.sala && p.sala.id != null && !map.has(p.sala.id)) {
+        map.set(p.sala.id, p.sala);
+      }
+    }
+    return Array.from(map.values()).sort((a, b) =>
+      (a.nome ?? '').localeCompare(b.nome ?? '', 'it')
+    );
+  }, [sale, proiezioni]);
+
+  const availableFilms = useMemo(() => {
+    if (films && films.length > 0) return films;
+    if (!proiezioni) return [];
+    const map = new Map<string | number, Film>();
+    for (const p of proiezioni) {
+      if (p.film && p.film.id != null && !map.has(p.film.id)) {
+        map.set(p.film.id, p.film);
+      }
+    }
+    return Array.from(map.values()).sort((a, b) =>
+      (a.titolo ?? '').localeCompare(b.titolo ?? '', 'it')
+    );
+  }, [films, proiezioni]);
 
   const [
     createProiezione,
@@ -163,8 +191,8 @@ export function AdminPalinsestoClient() {
         </div>
       ) : (
         <HallTimelineView
-          sale={sale}
-          films={films}
+          sale={availableSale}
+          films={availableFilms}
           proiezioni={proiezioni}
           onDeleteProiezione={handleOpenDelete}
         />
@@ -178,8 +206,8 @@ export function AdminPalinsestoClient() {
           setIsFormModalOpen(false);
         }}
         onSubmit={handleCreateSubmit}
-        films={films}
-        sale={sale}
+        films={availableFilms}
+        sale={availableSale}
         initialDate={selectedDate}
         isLoading={isCreating}
         error={createError as AppError | undefined}
