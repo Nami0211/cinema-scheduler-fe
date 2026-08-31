@@ -38,8 +38,10 @@ export function AdminPalinsestoClient() {
     refetch,
   } = useGetProiezioniByDataQuery(selectedDate);
 
-  const [createProiezione, { isLoading: isCreating, error: createError }] =
-    useCreateProiezioneMutation();
+  const [
+    createProiezione,
+    { isLoading: isCreating, error: createError, reset: resetCreate },
+  ] = useCreateProiezioneMutation();
 
   const [deleteProiezione, { isLoading: isDeleting }] =
     useDeleteProiezioneMutation();
@@ -57,6 +59,7 @@ export function AdminPalinsestoClient() {
   } | null>(null);
 
   function handleOpenCreate() {
+    resetCreate();
     setIsFormModalOpen(true);
   }
 
@@ -167,7 +170,10 @@ export function AdminPalinsestoClient() {
       {/* Modale Creazione Proiezione */}
       <ProiezioneFormModal
         isOpen={isFormModalOpen}
-        onClose={() => setIsFormModalOpen(false)}
+        onClose={() => {
+          resetCreate();
+          setIsFormModalOpen(false);
+        }}
         onSubmit={handleCreateSubmit}
         films={films}
         sale={sale}

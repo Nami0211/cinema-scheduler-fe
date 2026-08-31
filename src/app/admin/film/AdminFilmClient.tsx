@@ -29,10 +29,14 @@ export function AdminFilmClient() {
     refetch,
   } = useGetFilmsQuery();
 
-  const [createFilm, { isLoading: isCreating, error: createError }] =
-    useCreateFilmMutation();
-  const [updateFilm, { isLoading: isUpdating, error: updateError }] =
-    useUpdateFilmMutation();
+  const [
+    createFilm,
+    { isLoading: isCreating, error: createError, reset: resetCreate },
+  ] = useCreateFilmMutation();
+  const [
+    updateFilm,
+    { isLoading: isUpdating, error: updateError, reset: resetUpdate },
+  ] = useUpdateFilmMutation();
   const [deleteFilm, { isLoading: isDeleting }] = useDeleteFilmMutation();
 
   // Modal states
@@ -49,11 +53,15 @@ export function AdminFilmClient() {
   } | null>(null);
 
   function handleOpenCreate() {
+    resetCreate();
+    resetUpdate();
     setEditingFilm(null);
     setIsFormModalOpen(true);
   }
 
   function handleOpenEdit(film: Film) {
+    resetCreate();
+    resetUpdate();
     setEditingFilm(film);
     setIsFormModalOpen(true);
   }
@@ -163,6 +171,8 @@ export function AdminFilmClient() {
       <FilmFormModal
         isOpen={isFormModalOpen}
         onClose={() => {
+          resetCreate();
+          resetUpdate();
           setIsFormModalOpen(false);
           setEditingFilm(null);
         }}

@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslations } from 'next-intl';
 import type { Sale, Film } from 'api-client';
 import type { ProiezioneArricchita } from 'services/api/proiezioniApi';
-import { calculateFineProiezione, formatUtcToLocalTime } from 'utils/date';
+import { BUFFER_PULIZIA_MINUTI, formatUtcToLocalTime } from 'utils/date';
 import styles from './adminPalinsesto.module.css';
 
 interface HallTimelineViewProps {
@@ -63,15 +63,24 @@ export function HallTimelineView({
 
                     const filmTitolo =
                       filmObj?.titolo ?? `Film #${p.filmId ?? '?'}`;
-                    const durata = filmObj?.durataMinuti ?? 120;
                     const oraInizio = formatUtcToLocalTime(p.dataOraInizio);
 
-                    const { dataOraFineUtc, fineOccupazioneUtc } =
-                      calculateFineProiezione(p.dataOraInizio, durata);
+                    // Usa dataOraFine dal backend (campo required secondo lo schema).
+                    // Il buffer di pulizia viene derivato da questo valore, non ricalcolato
+                    // dalla durata del film, per rispettare il criterio #10.
+                    const dataOraFineBackend = p.dataOraFine;
+                    const oraFine = dataOraFineBackend
+                      ? formatUtcToLocalTime(dataOraFineBackend)
+                      : '⚠️ n/d';
 
-                    const oraFine = formatUtcToLocalTime(dataOraFineUtc);
-                    const oraFineBuffer =
-                      formatUtcToLocalTime(fineOccupazioneUtc);
+                    const oraFineBuffer = dataOraFineBackend
+                      ? formatUtcToLocalTime(
+                          new Date(
+                            new Date(dataOraFineBackend).getTime() +
+                              BUFFER_PULIZIA_MINUTI * 60 * 1000
+                          ).toISOString()
+                        )
+                      : '⚠️ n/d';
 
                     return (
                       <div key={p.id} className={styles.proiezioneCard}>
@@ -90,7 +99,7 @@ export function HallTimelineView({
 
                         <div className={styles.proiezioneTimes}>
                           <span className={styles.filmTimeRange}>
-                            🕒 {oraInizio} - {oraFine} ({durata} min)
+                            🕒 {oraInizio} - {oraFine}
                           </span>
                           <span className={styles.bufferBadge}>
                             🧹 {t('cleaningBuffer')} (fino alle {oraFineBuffer})
