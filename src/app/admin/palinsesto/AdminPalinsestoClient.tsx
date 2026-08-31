@@ -43,8 +43,10 @@ export function AdminPalinsestoClient() {
     { isLoading: isCreating, error: createError, reset: resetCreate },
   ] = useCreateProiezioneMutation();
 
-  const [deleteProiezione, { isLoading: isDeleting }] =
-    useDeleteProiezioneMutation();
+  const [
+    deleteProiezione,
+    { isLoading: isDeleting, error: deleteError, reset: resetDelete },
+  ] = useDeleteProiezioneMutation();
 
   // Modals
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
@@ -64,6 +66,7 @@ export function AdminPalinsestoClient() {
   }
 
   function handleOpenDelete(p: ProiezioneArricchita) {
+    resetDelete();
     setDeletingProiezione(p);
     setIsDeleteModalOpen(true);
   }
@@ -186,12 +189,14 @@ export function AdminPalinsestoClient() {
       <DeleteProiezioneModal
         isOpen={isDeleteModalOpen}
         onClose={() => {
+          resetDelete();
           setIsDeleteModalOpen(false);
           setDeletingProiezione(null);
         }}
         proiezione={deletingProiezione}
         onConfirm={handleConfirmDelete}
         isLoading={isDeleting}
+        error={deleteError as AppError | undefined}
       />
     </div>
   );

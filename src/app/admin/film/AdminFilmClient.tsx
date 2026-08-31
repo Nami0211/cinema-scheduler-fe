@@ -37,7 +37,10 @@ export function AdminFilmClient() {
     updateFilm,
     { isLoading: isUpdating, error: updateError, reset: resetUpdate },
   ] = useUpdateFilmMutation();
-  const [deleteFilm, { isLoading: isDeleting }] = useDeleteFilmMutation();
+  const [
+    deleteFilm,
+    { isLoading: isDeleting, error: deleteError, reset: resetDelete },
+  ] = useDeleteFilmMutation();
 
   // Modal states
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
@@ -67,6 +70,7 @@ export function AdminFilmClient() {
   }
 
   function handleOpenDelete(film: Film) {
+    resetDelete();
     setDeletingFilm(film);
     setIsDeleteModalOpen(true);
   }
@@ -186,12 +190,14 @@ export function AdminFilmClient() {
       <DeleteConfirmModal
         isOpen={isDeleteModalOpen}
         onClose={() => {
+          resetDelete();
           setIsDeleteModalOpen(false);
           setDeletingFilm(null);
         }}
         film={deletingFilm}
         onConfirm={handleConfirmDelete}
         isLoading={isDeleting}
+        error={deleteError as AppError | undefined}
       />
     </div>
   );

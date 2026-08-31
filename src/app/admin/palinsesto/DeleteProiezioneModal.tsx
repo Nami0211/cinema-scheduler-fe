@@ -3,6 +3,7 @@
 import React from 'react';
 import { useTranslations } from 'next-intl';
 import type { ProiezioneArricchita } from 'services/api/proiezioniApi';
+import type { AppError } from 'services/baseQuery';
 import { Modal } from 'ui/molecules/Modal';
 import { Button } from 'ui/atoms/Button/Button';
 import { formatUtcToLocalTime } from 'utils/date';
@@ -14,6 +15,7 @@ interface DeleteProiezioneModalProps {
   proiezione: ProiezioneArricchita | null;
   onConfirm: () => void;
   isLoading: boolean;
+  error?: AppError;
 }
 
 export function DeleteProiezioneModal({
@@ -22,6 +24,7 @@ export function DeleteProiezioneModal({
   proiezione,
   onConfirm,
   isLoading,
+  error,
 }: DeleteProiezioneModalProps) {
   const t = useTranslations('AdminPalinsesto');
 
@@ -47,6 +50,11 @@ export function DeleteProiezioneModal({
         </div>
       }
     >
+      {error && (
+        <div className={`${styles.alert} ${styles.alertError}`} role="alert">
+          <span>{error.message}</span>
+        </div>
+      )}
       <p className={styles.calcRow}>
         {t('confirmDeleteMessage', {
           film: filmTitolo,
