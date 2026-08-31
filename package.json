@@ -11,7 +11,9 @@
     "compile": "tsc --noEmit",
     "prettier": "prettier --write .",
     "prepare": "husky",
-    "api:generate": "node scripts/generate-api.mjs"
+    "api:generate": "node scripts/generate-api.mjs",
+    "test": "cross-env TZ=America/New_York vitest run",
+    "test:watch": "cross-env TZ=America/New_York vitest"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.12.0",
@@ -30,6 +32,8 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitest/coverage-v8": "^4.1.11",
+    "cross-env": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.0",
     "eslint-config-prettier": "^10.1.8",
@@ -37,7 +41,8 @@
     "lint-staged": "^16.4.0",
     "msw": "^2.15.0",
     "prettier": "^3.9.6",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.11"
   },
   "jest": {
     "coveragePathIgnorePatterns": [
