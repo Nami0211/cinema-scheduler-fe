@@ -21,6 +21,6 @@
 }
 
 .activeTab {
-  color: var(--color-primary, #e50914);
-  border-bottom-color: var(--color-primary, #e50914);
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
 }
